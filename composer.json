@@ -1,0 +1,19 @@
+{
+    "name": "andytruong/common",
+    "type": "library",
+    "description": "Common tools for PHP",
+    "keywords": ["api", "render"],
+    "homepage": "https://github.com/andytruong/common",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Truong"
+            , "email": "thehongtt@gmail.com"
+            , "homepage": "http://v3k.net/"
+            , "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.8"
+    },
+}

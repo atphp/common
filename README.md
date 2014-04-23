@@ -1,4 +1,4 @@
-common
+Common
 ======
 
-Common tools for PHP
+Common tools for PHP 5.3+

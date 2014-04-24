@@ -39,21 +39,3 @@ function at_newv($class_name, $argv = array()) {
   }
   return $reflector->newInstance();
 }
-
-if (!function_exists('yaml_parse')) {
-  /**
-   * Read YAML file.
-   *
-   * @param  string $path Path to yaml file.
-   * @return mixed
-   */
-  function yaml_parse_file($path) {
-    return Spyc::YAMLLoad($path);
-  }
-}
-
-if (!function_exists('yaml_emit')) {
-  function yaml_emit($data) {
-    return Spyc::YAMLDump($data, false, false, true);
-  }
-}

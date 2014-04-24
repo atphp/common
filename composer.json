@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": ">=5.3.8"
+        , "mustangostang/spyc": "0.5.*"
     },
     "autoload": {
         "files": [

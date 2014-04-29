@@ -6,21 +6,26 @@
     "homepage": "https://github.com/andytruong/common",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Andy Truong"
-            , "email": "thehongtt@gmail.com"
-            , "homepage": "http://v3k.net/"
-            , "role": "Lead Developer"
-        }
+      {
+          "name": "Andy Truong"
+          , "email": "thehongtt@gmail.com"
+          , "homepage": "http://v3k.net/"
+          , "role": "Lead Developer"
+      }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.8"
         , "mustangostang/spyc": "0.5.*"
+        , "pimple/pimple": "~2.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "~3.7.0"
     },
     "autoload": {
-        "files": [
-            "src/fn.php"
-            , "src/spyc.php"
-        ]
+      "files": ["src/fn.php" , "src/spyc.php"],
+      "psr-4": {
+        "AndyTruong\\Common\\": "src/"
+      }
     }
 }

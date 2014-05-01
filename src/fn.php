@@ -50,6 +50,7 @@ function at_newv($class_name, $argv = array()) {
  * @param string $id
  * @param EventManager $event_manager
  * @return EventManager
+ * @see atc()
  */
 function at_event_manager($id = 'default', $event_manager = NULL) {
   static $managers = array();
@@ -129,6 +130,7 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
       return $container->factory($value);
 
     case 'raw':
+    case 'getRaw':
       return $container->raw($id);
 
     case 'offsetUnset':

@@ -6,10 +6,7 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 
-/**
- * Extends this to make extensible class.
- */
-class EventAware implements EventManagerAwareInterface {
+class Container extends \Pimple implements EventManagerAwareInterface {
   protected $em;
 
   public function setEventManager(EventManagerInterface $em) {
@@ -23,5 +20,13 @@ class EventAware implements EventManagerAwareInterface {
       $this->setEventManager(new EventManager());
     }
     return $this->em;
+  }
+
+  public function offsetGet($id) {
+    if (!$this->offsetExists($id)) {
+      $this->getEventManager()->trigger('at.container.not_found', $this, array($id));
+    }
+
+    return parent::offsetGet($id);
   }
 }

@@ -18,19 +18,28 @@ class TwigFactory extends EventAware {
    *
    * @var string
    */
-  protected $em_name = 'twig.factory';
+  protected $em_name = 'at.twig.factory';
 
-  protected function getOptions() {
-    $options = array(
+  /**
+   * Get options for Twig-environment.
+   *
+   * @return array
+   */
+  public function getOptions() {
+    $options = array();
+
+    foreach ($this->getEventManager()->trigger('at.twig.factory.options') as $_options) {
+      if (is_array($_options)) {
+        $options = array_merge($options, $_options);
+      }
+    }
+
+    return $options + array(
       'debug' => FALSE,
       'auto_reload' => FALSE,
       'autoescape' => FALSE,
       'cache' => '/tmp',
     );
-
-    $this->getEventManager()->trigger('at.twig.factory.options', $this, $options);
-
-    return $options;
   }
 
   /**

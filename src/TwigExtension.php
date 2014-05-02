@@ -56,31 +56,26 @@ class TwigExtension extends Twig_Extension implements EventManagerAwareInterface
     return 'andytruong.common';
   }
 
-  /**
-   *
-   * @return array
-   * @event at.twig.extension.filters
-   */
-  function getFilters() {
-    $items = array();
-
-    $this->getEventManager()->trigger('at.twig.extension.filters', $this, $items);
-
-    return $items;
+  public function getFilters() {
+    return $this->collectItems('at.twig.extension.filters');
   }
 
-  function getFunctions() {
-    $items = array();
-
-    $this->getEventManager()->trigger('at.twig.extension.functions', $this, $items);
-
-    return $items;
+  public function getFunctions() {
+    return $this->collectItems('at.twig.extension.functions');
   }
 
-  function getGlobals() {
+  public function getGlobals() {
+    return $this->collectItems('at.twig.extension.globals');
+  }
+
+  public function collectItems($event) {
     $items = array();
 
-    $this->getEventManager()->trigger('at.twig.extension.globals', $this, $items);
+    foreach ($this->getEventManager()->trigger($event) as $_items) {
+      foreach ($_items as $item) {
+        $items[] = $item;
+      }
+    }
 
     return $items;
   }

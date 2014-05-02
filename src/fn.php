@@ -55,6 +55,11 @@ function at_newv($class_name, $argv = array()) {
 function at_event_manager($id = 'default', $event_manager = NULL) {
   static $managers = array();
 
+  // Let use alter default event manager
+  if (function_exists('at_event_manager_before')) {
+    at_event_manager_before($id, $event_manager);
+  }
+
   if (!isset($managers[$id]) && !is_null($event_manager)) {
     $managers[$id] = $event_manager;
   }

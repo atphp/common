@@ -153,6 +153,44 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
 }
 
 /**
+ * Get a service from container.
+ *
+ * @param string $id
+ * @return mixed
+ */
+function atcg($id) {
+  return atc('get', $id);
+}
+
+/**
+ * Get service's raw definition from container.
+ *
+ * @param string $id
+ */
+function atcr($id) {
+  return atc('raw', $id);
+}
+
+/**
+ * Set a service definition to container.
+ *
+ * @param string $id
+ * @param mixed $value
+ */
+function atcs($id, $value) {
+  return atc('set', $id, $value);
+}
+
+/**
+ * Destroy a service definition in container.
+ *
+ * @param string $id
+ */
+function atcu($id) {
+  return atc('unset', $id);
+}
+
+/**
  * Return Twig environment class.
  *
  * @staticvar Twig_Environment $twig

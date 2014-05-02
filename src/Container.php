@@ -3,7 +3,6 @@
 namespace AndyTruong\Common;
 
 use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 
 /**

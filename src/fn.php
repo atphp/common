@@ -56,7 +56,7 @@ function at_event_manager($id = 'default', $event_manager = NULL) {
   static $managers = array();
 
   // Let use alter default event manager
-  if (function_exists('at_event_manager_before')) {
+  if (function_exists('at_event_manager_before') && is_null($event_manager)) {
     at_event_manager_before($id, $event_manager);
   }
 

@@ -48,7 +48,7 @@ class TwigFactory extends EventAware {
   public function getTwigEnvironment() {
     $twig = new Twig_Environment(NULL, $this->getOptions());
     $twig->addExtension($this->getTwigExtension());
-    $this->getEventManager()->trigger('at.twig.factory.options', $twig);
+    $this->getEventManager()->trigger('at.twig.factory.init', $twig);
     return $twig;
   }
 }

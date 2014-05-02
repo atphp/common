@@ -1,11 +1,12 @@
 <?php
 /**
- * @file
+ * @file fn.php
  * Common functions
  */
 
 use AndyTruong\Common\Container;
 use AndyTruong\Common\TwigFactory;
+use AndyTruong\Common\ControllerResolver;
 use Zend\EventManager\EventManager;
 
 /**
@@ -165,4 +166,13 @@ function at_twig($refresh = FALSE) {
   }
 
   return $twig;
+}
+
+/**
+ * Shortcut to controller resolver.
+ * 
+ * @return \AndyTruong\Common\ControllerResolver
+ */
+function at_controller_resolver() {
+  return new ControllerResolver();
 }

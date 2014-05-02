@@ -170,7 +170,7 @@ function at_twig($refresh = FALSE) {
 
 /**
  * Shortcut to controller resolver.
- * 
+ *
  * @return \AndyTruong\Common\ControllerResolver
  */
 function at_controller_resolver() {

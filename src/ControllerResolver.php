@@ -16,9 +16,9 @@ namespace AndyTruong\Common;
  *  use AndyTruong\Common\ControllerResolver;
  *  $callable = at_id(new ControllerResolver())->get($input);
  *
- * @event at.controller_resolver.info Is fired when clas collect matcher info.
+ * @consider Provide `at.controller_resolver.info` event, let developer can provide more matchers.
  */
-class ControllerResolver extends EventAware {
+class ControllerResolver { // extends EventAware
   protected $matchers = array();
 
   public function addMatcher($matcher, $input_type = 'all') {
@@ -28,14 +28,14 @@ class ControllerResolver extends EventAware {
   public function getMatchers($input_type = NULL) {
     if (empty($this->matchers)) {
       $this->addMatcher(array($this, 'detectFunction'), 'string');
-      $this->addMatcher(array($this, 'detectService'), 'string');
       $this->addMatcher(array($this, 'detectStatic'), 'string');
       $this->addMatcher(array($this, 'detectTwig'), 'string');
+      $this->addMatcher(array($this, 'detectService'), 'string');
       $this->addMatcher(array($this, 'detectPair'), 'array');
       $this->addMatcher(array($this, 'detectMagic'), 'object');
 
       // Developers can hook to this event to add more matchers.
-      $this->getEventManager()->trigger('at.controller_resolver.info', $this);
+      // $this->getEventManager()->trigger('at.controller_resolver.info', $this);
     }
 
     $matchers = isset($this->matchers[$input_type]) ? $this->matchers[$input_type] : array();

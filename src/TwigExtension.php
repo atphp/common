@@ -53,7 +53,7 @@ class TwigExtension extends Twig_Extension implements EventManagerAwareInterface
   }
 
   public function getName() {
-    return 'AT Common';
+    return 'andytruong.common';
   }
 
   /**

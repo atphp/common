@@ -109,8 +109,6 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
 
   if (is_null($container)) {
     $container = new Container();
-    $em = at_event_manager('at.container');
-    $container->setEventManager($em);
   }
 
   if (is_null($id) && is_null($method)) {

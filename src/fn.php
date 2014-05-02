@@ -5,6 +5,7 @@
  */
 
 use AndyTruong\Common\Container;
+use AndyTruong\Common\TwigFactory;
 use Zend\EventManager\EventManager;
 
 /**
@@ -148,4 +149,20 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
     default:
       return $container->offsetGet($id);
   }
+}
+
+/**
+ * Return Twig environment class.
+ *
+ * @staticvar Twig_Environment $twig
+ * @return Twig_Environment
+ */
+function at_twig($refresh = FALSE) {
+  static $twig;
+
+  if ($refresh || is_null($twig)) {
+    $twig = at_id(new TwigFactory())->getTwigEnvironment();
+  }
+
+  return $twig;
 }

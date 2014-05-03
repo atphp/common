@@ -2,6 +2,8 @@
 /**
  * @file fn.php
  * Common functions
+ *
+ * @todo atcg(): can accept arguments.
  */
 
 use AndyTruong\Common\Container;

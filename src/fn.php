@@ -134,7 +134,8 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
       return $container->protect(function() use ($value) { return $value; });
 
     case 'factory':
-      return $container->factory($value);
+      $container[$id] = $container->factory($value);
+      return;
 
     case 'raw':
     case 'getRaw':
@@ -185,7 +186,7 @@ function atcs($id, $value) {
 
 /**
  * Set a service defintion as factory.
- * 
+ *
  * @param string $id
  * @param mixed $value
  */

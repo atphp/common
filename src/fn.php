@@ -184,6 +184,16 @@ function atcs($id, $value) {
 }
 
 /**
+ * Set a service defintion as factory.
+ * 
+ * @param string $id
+ * @param mixed $value
+ */
+function atcf($id, $value) {
+  return atc('factory', $id, $value);
+}
+
+/**
  * Destroy a service definition in container.
  *
  * @param string $id

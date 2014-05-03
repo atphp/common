@@ -2,11 +2,17 @@
 
 namespace AndyTruong\Common\TestCases;
 
+use Zend\EventManager\SharedEventManager;
+
 class Foo extends \AndyTruong\Common\EventAware {
   public $counter = 0;
+  public $logs = array();
 
-  public function increase() {
+  public function increase($msg = '') {
     $this->counter++;
+    if (!empty($msg)) {
+      $this->logs[] = $msg;
+    }
   }
 
   public function nothing() {
@@ -41,38 +47,51 @@ class Foo extends \AndyTruong\Common\EventAware {
 }
 
 class EventAwareTest extends \PHPUnit_Framework_TestCase {
+  public function getFoo() {
+    $foo = new Foo();
+    $this->assertEquals(0, $foo->counter);
+
+    // Clear all previous listeners
+    $foo->getEventManager()->unsetSharedManager();
+    foreach ($foo->getEventManager()->getEvents() as $event) {
+      $foo->getEventManager()->clearListeners($event);
+    }
+
+    return $foo;
+  }
+
   public function testTrigger() {
     $foo = new Foo();
 
     // @event nothing
-    $foo->getEventManager()->attach('nothing', function ($e) use ($foo) { $foo->increase(); });
+    $foo->getEventManager()->attach('nothing', function ($e) use ($foo) { $foo->increase('trigger:nothing'); });
     $foo->nothing();
     $this->assertEquals(1, $foo->counter);
 
     // @event noParams, fire event without params.
-    $foo->getEventManager()->attach('noParams', function ($e) { $e->getTarget()->increase(); });
+    $foo->getEventManager()->attach('noParams', function ($e) { $e->getTarget()->increase('trigger:noParams'); });
     $foo->noParams();
     $this->assertEquals(2, $foo->counter);
 
     // @event basic
-    $foo->getEventManager()->attach('full', function ($e) { $e->getTarget()->increase(); });
+    $foo->getEventManager()->attach('full', function ($e) { $e->getTarget()->increase('trigger:full'); });
     $foo->full('baz', 'bat');
     $this->assertEquals(3, $foo->counter);
 
     // @event triggerUntil
-    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase(); });
-    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase(); return 'STOP'; });
-    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase(); });
+    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase('trigger:triggerUntil:1'); });
+    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase('trigger:triggerUntil:2'); return 'STOP'; });
+    $foo->getEventManager()->attach('triggerUntil', function ($e) { $e->getTarget()->increase('trigger:triggerUntil:3'); });
     $foo->triggerUntil();
     $this->assertEquals(5, $foo->counter);
   }
 
   public function testCollection() {
-    $foo = new Foo();
+    $foo = $this->getFoo();
 
     // @event stopPropagation, a listener can break the listeners loop.
-    $foo->getEventManager()->attach('stopPropagation', function ($e) { $e->getTarget()->increase(); $e->stopPropagation(); });
-    $foo->getEventManager()->attach('stopPropagation', function ($e) { $e->getTarget()->increase(); });
+    $foo->getEventManager()->attach('stopPropagation', function ($e) { $e->getTarget()->increase('collection:stop:1'); $e->stopPropagation(); });
+    $foo->getEventManager()->attach('stopPropagation', function ($e) { $e->getTarget()->increase('collection:stop:2'); });
     $foo->stopPropagation();
     $this->assertEquals(1, $foo->counter, 'First listener breaks others');
 
@@ -83,5 +102,49 @@ class EventAwareTest extends \PHPUnit_Framework_TestCase {
     $values = $foo->collectValues();
     $this->assertEquals('Zend\EventManager\ResponseCollection', get_class($values));
     $this->assertEquals(3, $values->count());
+  }
+
+  /**
+   * Wildcard listener feature.
+   *
+   * @dataProvider dataProviderWildcartListener
+   */
+  public function testWildcartListener($events = array(), $event_alias = NULL) {
+    $foo = $this->getFoo();
+
+    // Attach wildcard listener
+    $foo->getEventManager()->attach(is_null($event_alias) ? array_keys($events) : '*', function($e) {
+      $e->getTarget()->increase('wildcardListener:' . __LINE__);
+    });
+
+    // Action!
+    foreach ($events as $method => $args) {
+      call_user_func_array(array($this, $method), $args);
+    }
+
+    // Assert
+    $this->assertEquals(count($events), $foo->counter);
+  }
+
+  public function dataProviderWildcartListener() {
+    return array(
+      array(array('full' => array('baz', 'bat'), 'noParams' => array())),
+      array(array('full' => array('baz', 'bat'), 'noParams' => array(), 'nothing' => array()), '*'),
+    );
+  }
+
+  /**
+   * SharedEventManager feature.
+   */
+  public function testSharedEventManager() {
+    $event = new SharedEventManager();
+    $event->attach('AndyTruong\Common\TestCases\Foo', 'noParams', function($e) {
+      $e->getTarget()->increase('sharedEvent:noParams');
+    });
+
+    $foo = $this->getFoo();
+    $foo->getEventManager()->setSharedManager($event);
+    $foo->noParams();
+    $this->assertEquals(1, $foo->counter);
   }
 }

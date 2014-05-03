@@ -49,25 +49,25 @@ function at_newv($class_name, $argv = array()) {
  * Get event Manager.
  *
  * @staticvar array $managers
- * @param string $id
+ * @param string $name
  * @param EventManager $event_manager
  * @return EventManager
  * @see atc()
  */
-function at_event_manager($id = 'default', $event_manager = NULL) {
+function at_event_manager($name = 'default', $event_manager = NULL) {
   static $managers = array();
 
   // Let use alter default event manager
   if (function_exists('at_event_manager_before') && is_null($event_manager)) {
-    at_event_manager_before($id, $event_manager);
+    at_event_manager_before($name, $event_manager);
   }
 
-  if (!isset($managers[$id]) && !is_null($event_manager)) {
-    $managers[$id] = $event_manager;
+  if (!isset($managers[$name]) && !is_null($event_manager)) {
+    $managers[$name] = $event_manager;
   }
 
-  if (!empty($managers[$id])) {
-    return $managers[$id];
+  if (!empty($managers[$name])) {
+    return $managers[$name];
   }
 
   if (!isset($managers['default'])) {

@@ -2,8 +2,6 @@
 /**
  * @file fn.php
  * Common functions
- *
- * @todo atcg(): can accept arguments.
  */
 
 use AndyTruong\Common\Container;
@@ -151,7 +149,10 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
     case 'get':
     case 'offsetGet':
     default:
-      return $container->offsetGet($id);
+      $args = func_get_args();
+      array_shift($args); // Remove $method
+      array_shift($args); // Remove $id
+      return $container->offsetGet($id, $args);
   }
 }
 
@@ -162,7 +163,9 @@ function atc($method = NULL, $id = NULL, $value = NULL) {
  * @return mixed
  */
 function atcg($id) {
-  return atc('get', $id);
+  $args = func_get_args();
+  array_unshift($args, 'get');
+  return call_user_func_array('atc', $args);
 }
 
 /**

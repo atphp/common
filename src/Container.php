@@ -53,12 +53,12 @@ class Container extends \Pimple implements EventManagerAwareInterface {
   /**
    * Wrap default offsetGet method to provide lazy loading…
    *
-   * @param string $id
-   * @return mixed
+   * @param type $id
+   * @return type
    */
-  public function offsetGet($id, $args = NULL) {
+  public function offsetGet($id) {
     if (!$this->offsetExists($id)) {
-      $this->getEventManager()->trigger('at.container.not_found', $this, array($id, $args));
+      $this->getEventManager()->trigger('at.container.not_found', $this, array($id));
     }
 
     return parent::offsetGet($id);

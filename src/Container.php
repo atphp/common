@@ -9,6 +9,7 @@ use Zend\EventManager\EventManagerAwareInterface;
  * Service Container
  *
  * @event at.container.not_found Is fired when a service is not found.
+ * @event at.container.find_by_tag Is fired when container find services by tag.
  */
 class Container extends \Pimple implements EventManagerAwareInterface {
   /**
@@ -61,5 +62,22 @@ class Container extends \Pimple implements EventManagerAwareInterface {
     }
 
     return parent::offsetGet($id);
+  }
+
+  /**
+   * Find services by tag
+   *
+   * @param  string  $tag
+   * @param  string  $return Type of returned services,
+   * @return array
+   */
+  public function find($tag, $return = 'service_name') {
+    $defs = array();
+
+    foreach ($this->getEventManager()->trigger('at.container.find_by_tag', $this, array($tag, $return)) as $_defs) {
+      $defs = array_merge($defs, $_defs);
+    }
+
+    return $defs;
   }
 }

@@ -17,7 +17,6 @@
     "require": {
         "php": ">=5.3.8"
         , "mustangostang/spyc": "0.5.*"
-        , "pimple/pimple": "~2.0"
         , "zendframework/zend-eventmanager": "2.3.*@dev"
         , "twig/twig": "~1.15"
     },

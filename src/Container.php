@@ -57,6 +57,10 @@ class Container extends \Pimple implements EventManagerAwareInterface {
    * @return mixed
    */
   public function offsetGet($id, $args = NULL) {
+    if (!is_null($args)) {
+      $this["{$id}:arguments"] = $args;
+    }
+
     if (!$this->offsetExists($id)) {
       $this->getEventManager()->trigger('at.container.not_found', $this, array($id, $args));
     }

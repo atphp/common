@@ -124,7 +124,7 @@ class ControllerResolver { // extends EventAware
   protected function detectService($input) {
     if (FALSE !== strpos($input, ':')) {
       list($service, $method) = explode(':', $input, 2);
-      return array(atcg($service), $method);
+      return array(at_container($service), $method);
     }
   }
 }

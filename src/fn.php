@@ -16,8 +16,10 @@ use Zend\EventManager\EventManager;
  * Can:
  *    at_id(new Thing())->doStuff();
  */
-function at_id($x) {
-  return $x;
+if (!function_exists('at_id')) {
+  function at_id($x) {
+    return $x;
+  }
 }
 
 /**

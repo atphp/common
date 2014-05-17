@@ -4,9 +4,9 @@
  * Common functions
  */
 
-use AndyTruong\Common\Container;
 use AndyTruong\Common\TwigFactory;
 use AndyTruong\Common\ControllerResolver;
+use AndyTruong\Common\Context;
 use Zend\EventManager\EventManager;
 
 /**
@@ -102,4 +102,29 @@ function at_twig($refresh = FALSE) {
  */
 function at_controller_resolver() {
   return new ControllerResolver();
+}
+
+/**
+ * Container for request values.
+ *
+ * @param string $id
+ * @param mixed $value
+ * @return \Drupal\at_base\Context|mixed
+ */
+function at_context($id = NULL, $value = NULL) {
+  static $context;
+
+  if (is_null($context)) {
+      $context = new Context();
+  }
+
+  if (!is_null($id) && is_null($value)) {
+    return $context->offsetGet($id);
+  }
+
+  if (!is_null($id) && !is_null($value)) {
+    return $context->offsetSet($id, $value);
+  }
+
+  return $context;
 }

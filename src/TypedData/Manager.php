@@ -17,10 +17,11 @@ class Manager extends EventAware
 
     protected static $plugins = array(
         'type.any' => 'AndyTruong\Common\TypedData\Plugin\Any',
+        'type.boolean' => 'AndyTruong\Common\TypedData\Plugin\Boolean',
         'type.constant' => 'AndyTruong\Common\TypedData\Plugin\Constant',
         'type.function' => 'AndyTruong\Common\TypedData\Plugin\Fn',
         'type.integer' => 'AndyTruong\Common\TypedData\Plugin\Integer',
-        'type.itemlist' => 'AndyTruong\Common\TypedData\Plugin\ItemList',
+        'type.list' => 'AndyTruong\Common\TypedData\Plugin\ItemList',
         'type.closure' => 'AndyTruong\Common\TypedData\Plugin\Kallable',
         'type.mapping' => 'AndyTruong\Common\TypedData\Plugin\Mapping',
         'type.string' => 'AndyTruong\Common\TypedData\Plugin\String',
@@ -47,7 +48,7 @@ class Manager extends EventAware
             return new self::$plugins[$id];
         }
 
-        throw new Exception('Unknow typed-data plugin: ' . strip_tags($id));
+        throw new \Exception('Unknow typed-data plugin: ' . strip_tags($id));
     }
 
     /**
@@ -56,7 +57,7 @@ class Manager extends EventAware
      * @param array $definition
      * @return PluginInterface
      */
-    protected function findPluginFromDefinition($definition)
+    protected function findPluginFromDefinition(&$definition)
     {
         if (0 === strpos($definition['type'], 'type.')) {
             $id = $definition['type'];
@@ -67,7 +68,6 @@ class Manager extends EventAware
 
         // Special type: list<element_type>
         if (strpos($id, 'type.list<') === 0) {
-            $definition['element_type'] = substr($id, 10, -1);
             $id = 'type.list';
         }
 

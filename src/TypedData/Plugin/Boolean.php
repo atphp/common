@@ -7,14 +7,14 @@ class Boolean extends Base
 
     public function isEmpty()
     {
-        if (!is_null($this->value)) {
-            return $this->value === FALSE;
+        if (!is_null($this->input)) {
+            return $this->input === FALSE;
         }
     }
 
     public function validateInput(&$error = NULL)
     {
-        if (!is_bool($this->value)) {
+        if (!is_bool($this->input)) {
             $error = 'Input is not a boolean value.';
             return FALSE;
         }

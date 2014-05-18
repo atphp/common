@@ -16,23 +16,23 @@ class Constant extends Base
     public function getValue()
     {
         if ($this->validate()) {
-            return constant($this->value);
+            return constant($this->input);
         }
     }
 
     public function validateInput(&$error = NULL)
     {
-        if (!is_string($this->value)) {
+        if (!is_string($this->input)) {
             $error = 'Input must be a string.';
             return FALSE;
         }
 
-        if (!preg_match('/^[A-Z0-9_]+$/', $this->value)) {
+        if (!preg_match('/^[A-Z0-9_]+$/', $this->input)) {
             $error = 'Constant must only contains A-Z/0-9/_';
             return FALSE;
         }
 
-        if (!defined($this->value)) {
+        if (!defined($this->input)) {
             $error = 'Constant is not defined.';
             return FALSE;
         }

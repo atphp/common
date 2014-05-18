@@ -5,30 +5,30 @@ namespace AndyTruong\Common\TypedData\Plugin;
 abstract class Base implements PluginInterface
 {
 
-    protected $def;
-    protected $value;
+    protected $definition;
+    protected $input;
 
-    public function __construct($def = NULL, $val = NULL)
+    public function __construct($definition = NULL, $input = NULL)
     {
-        !is_null($def) && $this->setDef($def);
-        !is_null($val) && $this->setValue($val);
+        !is_null($definition) && $this->setDefinition($definition);
+        !is_null($input) && $this->setInput($input);
     }
 
-    public function setDef($def)
+    public function setDefinition($definition)
     {
-        $this->def = $def;
+        $this->definition = $definition;
         return $this;
     }
 
-    public function setValue($value)
+    public function setInput($input)
     {
-        $this->value = $value;
+        $this->input = $input;
         return $this;
     }
 
     public function isEmpty()
     {
-        return FALSE;
+        return false;
     }
 
     /**
@@ -43,19 +43,18 @@ abstract class Base implements PluginInterface
     public function getValue()
     {
         if ($this->validate()) {
-            return $this->value;
+            return $this->input;
         }
     }
 
     public function validate(&$error = NULL)
     {
-        return $this->validateDefinition($error) && $this->validateInput($error)
-        ;
+        return $this->validateDefinition($error) && $this->validateInput($error);
     }
 
     protected function validateDefinition(&$error)
     {
-        if (!is_array($this->def)) {
+        if (!is_array($this->definition)) {
             $error = 'Data definition must be an array.';
             return FALSE;
         }
@@ -64,7 +63,7 @@ abstract class Base implements PluginInterface
 
     protected function validateInput(&$error)
     {
-        if (!empty($this->def['validate'])) {
+        if (!empty($this->definition['validate'])) {
             return $this->validateUserCallacks($error);
         }
         return TRUE;
@@ -72,9 +71,9 @@ abstract class Base implements PluginInterface
 
     protected function validateUserCallacks(&$error)
     {
-        foreach ($this->def['validate'] as $callback) {
+        foreach ($this->definition['validate'] as $callback) {
             if (is_callable($callback)) {
-                if (!$callback($this->value, $error)) {
+                if (!$callback($this->input, $error)) {
                     return FALSE;
                 }
             }

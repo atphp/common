@@ -7,14 +7,14 @@ class Integer extends Base
 
     public function isEmpty()
     {
-        if (!is_null($this->value)) {
-            return $this->value === 0;
+        if (!is_null($this->input)) {
+            return $this->input === 0;
         }
     }
 
     public function validateInput(&$error = NULL)
     {
-        if (!is_int($this->value)) {
+        if (!is_int($this->input)) {
             $error = 'Input is not an integer value.';
             return FALSE;
         }

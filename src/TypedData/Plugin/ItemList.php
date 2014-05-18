@@ -10,27 +10,26 @@ class ItemList extends Base
      */
     protected $element_type = NULL;
 
-    public function isEmpty()
+    public function setDefinition($definition)
     {
-        if (!is_null($this->value)) {
-            return is_empty($this->value);
+        // Find element type from parent type. E.g type.list<integer> => integer
+        if (0 === strpos($definition['type'], 'list<')) {
+            $this->element_type = substr($definition['type'], 5, -1);
         }
+
+        return parent::setDefinition($definition);
     }
 
-    public function setDef($def)
+    public function isEmpty()
     {
-        $this->def = $def;
-
-        if (!empty($def['element_type'])) {
-            $this->element_type = $def['element_type'];
+        if (!is_null($this->input)) {
+            return is_empty($this->input);
         }
-
-        return $this;
     }
 
     public function validateInput(&$error = NULL)
     {
-        if (!is_array($this->value)) {
+        if (!is_array($this->input)) {
             $error = 'Input must be an array.';
             return FALSE;
         }
@@ -49,8 +48,8 @@ class ItemList extends Base
     {
         $data = at_data(array('type' => $this->element_type));
 
-        foreach ($this->value as $k => $v) {
-            $data->setValue($v);
+        foreach ($this->input as $k => $input) {
+            $data->setInput($input);
             if (!$data->validate()) {
                 $error = "Element <strong>{$k}</strong> is not type of {$this->element_type}";
                 return FALSE;

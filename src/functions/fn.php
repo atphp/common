@@ -138,7 +138,7 @@ function at_context($id = NULL, $value = NULL) {
  * @return mixed
  * @throws \Exception
  */
-function at_data($definition, $input) {
+function at_data($definition, $input = NULL) {
   static $manager;
 
   if (is_null($manager)) {

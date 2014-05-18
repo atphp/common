@@ -12,12 +12,12 @@ class Fn extends String
 
     public function validateInput(&$error = NULL)
     {
-        if (!is_string($this->value)) {
+        if (!is_string($this->input)) {
             $error = 'Function name must be a string.';
             return FALSE;
         }
 
-        if (!function_exists($this->value)) {
+        if (!function_exists($this->input)) {
             $error = 'Function does not exist.';
             return FALSE;
         }

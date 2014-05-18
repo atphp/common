@@ -16,7 +16,7 @@ class Mapping extends MappingBase
             return FALSE;
         }
 
-        if (empty($this->def['skip validate mapping'])) {
+        if (empty($this->definition['skip validate mapping'])) {
             if (!$this->validateDefMapping($error)) {
                 return FALSE;
             }
@@ -27,12 +27,12 @@ class Mapping extends MappingBase
 
     protected function validateDefMapping(&$error)
     {
-        if (!isset($this->def['mapping'])) {
+        if (!isset($this->definition['mapping'])) {
             $error = 'Wrong schema: Missing mapping property';
             return FALSE;
         }
 
-        if (!is_array($this->def['mapping'])) {
+        if (!is_array($this->definition['mapping'])) {
             $error = 'Mapping property of data definition must be an array.';
             return FALSE;
         }
@@ -48,7 +48,7 @@ class Mapping extends MappingBase
             )
         );
 
-        foreach ($this->def['mapping'] as $k => $e) {
+        foreach ($this->definition['mapping'] as $k => $e) {
             if (!at_data($element_schema, $e)->validate($error)) {
                 $error = "Wrong schema: {$error}";
                 return FALSE;
@@ -60,7 +60,7 @@ class Mapping extends MappingBase
 
     protected function validateInput(&$error)
     {
-        if (!is_array($this->value)) {
+        if (!is_array($this->input)) {
             $error = 'Input must be an array.';
             return FALSE;
         }
@@ -71,8 +71,8 @@ class Mapping extends MappingBase
 
     protected function validateRequiredProperties(&$error)
     {
-        foreach ($this->def['mapping'] as $k => $item_def) {
-            if (!empty($item_def['required']) && !isset($this->value[$k])) {
+        foreach ($this->definition['mapping'] as $k => $item_def) {
+            if (!empty($item_def['required']) && !isset($this->input[$k])) {
                 $error = "Property {$k} is required.";
                 return FALSE;
             }
@@ -83,8 +83,8 @@ class Mapping extends MappingBase
     private function validateAllowingExtraProperties(&$error)
     {
         if (!$this->allow_extra_properties) {
-            foreach (array_keys($this->value) as $k) {
-                if (!isset($this->def['mapping'][$k])) {
+            foreach (array_keys($this->input) as $k) {
+                if (!isset($this->definition['mapping'][$k])) {
                     $error = 'Unexpected key found: ' . $k . '.';
                     return FALSE;
                 }
@@ -96,9 +96,9 @@ class Mapping extends MappingBase
 
     protected function validateElementType(&$error)
     {
-        foreach ($this->value as $k => $v) {
-            if (!empty($this->def['mapping'][$k])) {
-                if (!at_data($this->def['mapping'][$k], $v)->validate($error)) {
+        foreach ($this->input as $k => $v) {
+            if (!empty($this->definition['mapping'][$k])) {
+                if (!at_data($this->definition['mapping'][$k], $v)->validate($error)) {
                     $error = "Invalid property `{$k}`: {$error}";
                     return FALSE;
                 }
@@ -115,17 +115,17 @@ class Mapping extends MappingBase
      */
     protected function validateRequireOne(&$error)
     {
-        if (empty($this->def['require_one_of'])) {
+        if (empty($this->definition['require_one_of'])) {
             return TRUE;
         }
 
-        foreach ($this->def['require_one_of'] as $keys) {
+        foreach ($this->definition['require_one_of'] as $keys) {
             if ($this->validateRequireOneKeys($keys)) {
                 return TRUE;
             }
         }
 
-        $error = 'Missing one of  required keys: ' . print_r($this->def['require_one_of'], TRUE);
+        $error = 'Missing one of  required keys: ' . print_r($this->definition['require_one_of'], TRUE);
 
         return FALSE;
     }
@@ -137,7 +137,7 @@ class Mapping extends MappingBase
         $provided = TRUE;
 
         foreach ($keys as $k) {
-            if (!isset($this->value[$k])) {
+            if (!isset($this->input[$k])) {
                 $provided = FALSE;
                 break;
             }

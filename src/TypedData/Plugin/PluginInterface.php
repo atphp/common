@@ -4,6 +4,7 @@ namespace AndyTruong\Common\TypedData\Plugin;
 
 interface PluginInterface
 {
+
     /**
      * Set definition for typed-data.
      */

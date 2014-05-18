@@ -9,6 +9,7 @@ namespace AndyTruong\Common\TypedData\Plugin;
  */
 class Mapping extends MappingBase
 {
+
     public function validate(&$error = NULL)
     {
         return $this->validateDefinition($error) && $this->validateInput($error);

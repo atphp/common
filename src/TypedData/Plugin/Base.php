@@ -31,7 +31,8 @@ abstract class Base implements PluginInterface
         return $this;
     }
 
-    public function getInput() {
+    public function getInput()
+    {
         return $this->input;
     }
 

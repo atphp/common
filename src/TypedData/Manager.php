@@ -15,6 +15,10 @@ class Manager extends EventAware
 
     protected $em_name = 'at.typed_data';
 
+    /**
+     *
+     * @var array
+     */
     protected static $plugins = array(
         'type.any' => 'AndyTruong\Common\TypedData\Plugin\Any',
         'type.boolean' => 'AndyTruong\Common\TypedData\Plugin\Boolean',

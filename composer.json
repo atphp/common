@@ -24,7 +24,7 @@
       "phpunit/phpunit": "~3.7.0"
     },
     "autoload": {
-      "files": ["src/fn.php" , "src/spyc.php"],
+      "files": ["src/functions/fn.php" , "src/functions/spyc.php"],
       "psr-4": {
         "AndyTruong\\Common\\": "src/"
       }

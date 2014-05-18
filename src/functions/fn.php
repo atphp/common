@@ -7,6 +7,7 @@
 use AndyTruong\Common\TwigFactory;
 use AndyTruong\Common\ControllerResolver;
 use AndyTruong\Common\Context;
+use AndyTruong\Common\TypedData\Manager as TypedDataManager;
 use Zend\EventManager\EventManager;
 
 /**
@@ -127,4 +128,22 @@ function at_context($id = NULL, $value = NULL) {
   }
 
   return $context;
+}
+
+/**
+ * Wrapper for typped-data, an API to make sure data provided is matched to its schema.
+ *
+ * @param array $definition
+ * @param mixed $input
+ * @return mixed
+ * @throws \Exception
+ */
+function at_data($definition, $input = NULL) {
+  static $manager;
+
+  if (is_null($manager)) {
+    $manager = new TypedDataManager();
+  }
+
+  return $manager->getPlugin($definition, $input);
 }

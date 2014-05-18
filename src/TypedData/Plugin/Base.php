@@ -20,10 +20,19 @@ abstract class Base implements PluginInterface
         return $this;
     }
 
+    public function getDefinition()
+    {
+        return $this->definition;
+    }
+
     public function setInput($input)
     {
         $this->input = $input;
         return $this;
+    }
+
+    public function getInput() {
+        return $this->input;
     }
 
     public function isEmpty()

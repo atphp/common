@@ -7,6 +7,12 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testMappingType()
     {
+        $error = array();
+
+        if (!defined('MENU_NORMAL_ITEM')) {
+            define('MENU_NORMAL_ITEM', 6);
+        }
+
         $schema = array(
             'type' => 'mapping',
             'mapping' => array(
@@ -21,16 +27,19 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $input = array(
             'title' => 'Menu item',
             'access arguments' => array('access content'),
-            'page callback' => 't',
+            'page callback' => 'strip_tags',
             'page arguments' => array('Drupal'),
             'type' => 'MENU_NORMAL_ITEM',
         );
 
         $data = at_data($schema, $input);
 
-        $this->assertTrue($data->validate());
-        $result = $data->getValue();
+        $this->assertEquals($schema, $data->getDefinition(), 'Schema set correctly.');
+        $this->assertEquals($input, $data->getInput(), 'Input set correctly.');
+        $this->assertTrue($data->validate($error), 'Validation is working');
 
+
+        $result = $data->getValue();
         $this->assertEquals($input['title'], $result['title']);
         $this->assertEquals($input['access arguments'], $result['access arguments']);
         $this->assertEquals($input['page callback'], $result['page callback']);

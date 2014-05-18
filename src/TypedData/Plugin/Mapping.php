@@ -9,20 +9,24 @@ namespace AndyTruong\Common\TypedData\Plugin;
  */
 class Mapping extends MappingBase
 {
+    public function validate(&$error = NULL)
+    {
+        return $this->validateDefinition($error) && $this->validateInput($error);
+    }
 
     protected function validateDefinition(&$error)
     {
         if (!parent::validateDefinition($error)) {
-            return FALSE;
+            return false;
         }
 
         if (empty($this->definition['skip validate mapping'])) {
             if (!$this->validateDefMapping($error)) {
-                return FALSE;
+                return false;
             }
         }
 
-        return TRUE;
+        return true;
     }
 
     protected function validateDefMapping(&$error)

@@ -2,15 +2,16 @@
 
 namespace AndyTruong\Common;
 
-use Twig_Environment;
-use AndyTruong\Common\TwigExtension;
-use AndyTruong\Common\EventAware;
+use Twig_Environment,
+    Twig_Loader_Filesystem,
+    AndyTruong\Common\TwigExtension,
+    AndyTruong\Common\EventAware;
 
 /**
  * Class to create Twig enviroment object.
  *
- * @event at.twig.factory.options Twig-environment options are alterable on this event.
- * @event at.twig.factory.init    On Twig-environment initialized.
+ * @event at.twig.factory.options  Twig-environment options are alterable on this event.
+ * @event at.twig.factory.init     On Twig-environment initialized.
  * @see at_twig()
  */
 class TwigFactory extends EventAware

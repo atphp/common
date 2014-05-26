@@ -1,26 +1,27 @@
 <?php
+
 /**
  * @file fn.php
  * Common functions
  */
 
-use AndyTruong\Common\TwigFactory;
-use AndyTruong\Common\ControllerResolver;
-use AndyTruong\Common\Context;
-use AndyTruong\Common\TypedData\Manager as TypedDataManager;
-use Zend\EventManager\EventManager;
+use AndyTruong\Common\TwigFactory,
+    AndyTruong\Common\ControllerResolver,
+    AndyTruong\Common\Context,
+    AndyTruong\Common\TypedData\Manager as TypedDataManager,
+    Zend\EventManager\EventManager;
 
 /**
- * Can not:
- *    new Thing()->doStuff();
- *
- * Can:
- *    at_id(new Thing())->doStuff();
+ * Can not: new Thing()->doStuff();
+ * But: at_id(new Thing())->doStuff();
  */
 if (!function_exists('at_id')) {
-  function at_id($x) {
-    return $x;
-  }
+
+    function at_id($x)
+    {
+        return $x;
+    }
+
 }
 
 /**
@@ -40,12 +41,13 @@ if (!function_exists('at_id')) {
  * @return obj     A new object of the specified class, constructed by passing
  *                  the argument vector to its constructor.
  */
-function at_newv($class_name, $argv = array()) {
-  $reflector = new ReflectionClass($class_name);
-  if ($argv) {
-    return $reflector->newInstanceArgs($argv);
-  }
-  return $reflector->newInstance();
+function at_newv($class_name, $argv = array())
+{
+    $reflector = new ReflectionClass($class_name);
+    if ($argv) {
+        return $reflector->newInstanceArgs($argv);
+    }
+    return $reflector->newInstance();
 }
 
 /**
@@ -57,27 +59,28 @@ function at_newv($class_name, $argv = array()) {
  * @return EventManager
  * @see atc()
  */
-function at_event_manager($name = 'default', $event_manager = NULL) {
-  static $managers = array();
+function at_event_manager($name = 'default', $event_manager = NULL)
+{
+    static $managers = array();
 
-  // Let use alter default event manager
-  if (function_exists('at_event_manager_before') && is_null($event_manager)) {
-    at_event_manager_before($name, $event_manager);
-  }
+    // Let use alter default event manager
+    if (function_exists('at_event_manager_before') && is_null($event_manager)) {
+        at_event_manager_before($name, $event_manager);
+    }
 
-  if (!isset($managers[$name]) && !is_null($event_manager)) {
-    $managers[$name] = $event_manager;
-  }
+    if (!isset($managers[$name]) && !is_null($event_manager)) {
+        $managers[$name] = $event_manager;
+    }
 
-  if (!empty($managers[$name])) {
-    return $managers[$name];
-  }
+    if (!empty($managers[$name])) {
+        return $managers[$name];
+    }
 
-  if (!isset($managers['default'])) {
-    $managers['default'] = new EventManager();
-  }
+    if (!isset($managers['default'])) {
+        $managers['default'] = new EventManager();
+    }
 
-  return $managers['default'];
+    return $managers['default'];
 }
 
 /**
@@ -86,14 +89,15 @@ function at_event_manager($name = 'default', $event_manager = NULL) {
  * @staticvar Twig_Environment $twig
  * @return Twig_Environment
  */
-function at_twig($refresh = FALSE) {
-  static $twig;
+function at_twig($refresh = false)
+{
+    static $twig;
 
-  if ($refresh || is_null($twig)) {
-    $twig = at_id(new TwigFactory())->getTwigEnvironment();
-  }
+    if ($refresh || is_null($twig)) {
+        $twig = at_id(new TwigFactory())->getTwigEnvironment();
+    }
 
-  return $twig;
+    return $twig;
 }
 
 /**
@@ -101,8 +105,9 @@ function at_twig($refresh = FALSE) {
  *
  * @return \AndyTruong\Common\ControllerResolver
  */
-function at_controller_resolver() {
-  return new ControllerResolver();
+function at_controller_resolver()
+{
+    return new ControllerResolver();
 }
 
 /**
@@ -112,22 +117,23 @@ function at_controller_resolver() {
  * @param mixed $value
  * @return \Drupal\at_base\Context|mixed
  */
-function at_context($id = NULL, $value = NULL) {
-  static $context;
+function at_context($id = NULL, $value = NULL)
+{
+    static $context;
 
-  if (is_null($context)) {
-      $context = new Context();
-  }
+    if (is_null($context)) {
+        $context = new Context();
+    }
 
-  if (!is_null($id) && is_null($value)) {
-    return $context->offsetGet($id);
-  }
+    if (!is_null($id) && is_null($value)) {
+        return $context->offsetGet($id);
+    }
 
-  if (!is_null($id) && !is_null($value)) {
-    return $context->offsetSet($id, $value);
-  }
+    if (!is_null($id) && !is_null($value)) {
+        return $context->offsetSet($id, $value);
+    }
 
-  return $context;
+    return $context;
 }
 
 /**
@@ -151,12 +157,13 @@ function at_context($id = NULL, $value = NULL) {
  * @return mixed
  * @throws \Exception
  */
-function at_data($definition, $input = NULL) {
-  static $manager;
+function at_data($definition, $input = NULL)
+{
+    static $manager;
 
-  if (is_null($manager)) {
-    $manager = new TypedDataManager();
-  }
+    if (is_null($manager)) {
+        $manager = new TypedDataManager();
+    }
 
-  return $manager->getPlugin($definition, $input);
+    return $manager->getPlugin($definition, $input);
 }

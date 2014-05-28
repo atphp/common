@@ -19,11 +19,28 @@ namespace AndyTruong\Common;
  *
  * @consider Provide `at.controller_resolver.info` event, let developer can provide more matchers.
  */
-class ControllerResolver
-{ // extends EventAware
+class ControllerResolver extends EventAware
+{
+    /**
+     * Name of event-manager.
+     *
+     * @var string
+     */
+    protected $em_name = 'at.controller_resolver';
 
+    /**
+     * Container for matching processers.
+     *
+     * @var array
+     */
     protected $matchers = array();
 
+    /**
+     * Add a custom matching processer to controller resolver.
+     *
+     * @param callable $matcher
+     * @param string $input_type
+     */
     public function addMatcher($matcher, $input_type = 'all')
     {
         $this->matchers[$input_type][] = $matcher;
@@ -40,7 +57,7 @@ class ControllerResolver
             $this->addMatcher(array($this, 'detectMagic'), 'object');
 
             // Developers can hook to this event to add more matchers.
-            // $this->getEventManager()->trigger('at.controller_resolver.info', $this);
+            $this->getEventManager()->trigger('at.controller_resolver.info', $this);
         }
 
         $matchers = isset($this->matchers[$input_type]) ? $this->matchers[$input_type] : array();
@@ -114,16 +131,6 @@ class ControllerResolver
 
         if (function_exists($input)) {
             return $input;
-        }
-    }
-
-    protected function detectTwig($input)
-    {
-        $is_twig_1 = FALSE !== strpos($input, '{{');
-        $is_twig_2 = FALSE !== strpos($input, '{%');
-        if ($is_twig_1 || $is_twig_2) {
-            $twig = at_twig();
-            return array($twig, 'render');
         }
     }
 

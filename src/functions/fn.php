@@ -5,8 +5,7 @@
  * Common functions
  */
 
-use AndyTruong\Common\TwigFactory,
-    AndyTruong\Common\ControllerResolver,
+use AndyTruong\Common\ControllerResolver,
     AndyTruong\Common\Context,
     AndyTruong\Common\TypedData\Manager as TypedDataManager,
     Zend\EventManager\EventManager;
@@ -81,23 +80,6 @@ function at_event_manager($name = 'default', $event_manager = NULL)
     }
 
     return $managers['default'];
-}
-
-/**
- * Return Twig environment class.
- *
- * @staticvar Twig_Environment $twig
- * @return Twig_Environment
- */
-function at_twig($refresh = false)
-{
-    static $twig;
-
-    if ($refresh || is_null($twig)) {
-        $twig = at_id(new TwigFactory())->getTwigEnvironment();
-    }
-
-    return $twig;
 }
 
 /**

@@ -41,7 +41,7 @@ class EventAware implements EventManagerAwareInterface
     {
         if (null === $this->em) {
             $em_name = !is_null($this->em_name) ? $this->em_name : str_replace('\\', '.', get_called_class());
-            $this->setEventManager($em = at_event_manager($em_name));
+            $this->setEventManager(at_event_manager($em_name));
         }
         return $this->em;
     }

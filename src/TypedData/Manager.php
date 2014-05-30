@@ -54,7 +54,7 @@ class Manager extends EventAware
             $implemented_interfaces = class_implements($obj);
             if (!in_array($expected_interface, $implemented_interfaces)) {
                 $msg = sprintf('Class for typed data %s does not implement %s', strip_tags($id), $expected_interface);
-                throw new Exception($msg);
+                throw new \Exception($msg);
             }
             return $obj;
         }

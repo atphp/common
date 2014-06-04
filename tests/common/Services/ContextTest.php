@@ -8,15 +8,40 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('AndyTruong\Common\Context', at_context());
     }
 
+    private function getContext() {
+        return at_context();
+    }
+
     /**
      * @dataProvider dataProviderGetSet
      */
     public function testGetSet($key, $value) {
-        $this->assertNull(at_context($key));
+        $context = $this->getContext();
 
-        at_context($key, $value);
+        // No value configured yet
+        // Test offsetExists() & offsetGet() methods
+        $this->assertFalse(isset($context[$key]));
+        $this->assertNull($context[$key]);
 
+        // Test offsetSet()
+        $context[$key] = $value;
         $this->assertEquals($value, at_context($key));
+
+        // Test offsetUnset
+        unset($context[$key]);
+        $this->assertFalse(isset($context[$key]));
+        $this->assertNull($context[$key]);
+    }
+
+    /**
+     * @dataProvider dataProviderGetSet
+     */
+    public function testNullKey($key, $value) {
+        $context = $this->getContext();
+        $context[] = $value;
+
+        $internal = $context->getContainer();
+        $this->assertEquals($value, array_pop($internal));
     }
 
     public function dataProviderGetSet() {

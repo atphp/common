@@ -51,8 +51,6 @@ class ControllerResolver extends EventAware
         if (empty($this->matchers)) {
             $this->addMatcher(array($this, 'detectFunction'), 'string');
             $this->addMatcher(array($this, 'detectStatic'), 'string');
-            $this->addMatcher(array($this, 'detectTwig'), 'string');
-            $this->addMatcher(array($this, 'detectService'), 'string');
             $this->addMatcher(array($this, 'detectPair'), 'array');
             $this->addMatcher(array($this, 'detectMagic'), 'object');
 
@@ -131,19 +129,6 @@ class ControllerResolver extends EventAware
 
         if (function_exists($input)) {
             return $input;
-        }
-    }
-
-    /**
-     * Definition is service_name:service_method
-     *
-     * @return null|callable
-     */
-    protected function detectService($input)
-    {
-        if (FALSE !== strpos($input, ':')) {
-            list($service, $method) = explode(':', $input, 2);
-            return array(at_container($service), $method);
         }
     }
 

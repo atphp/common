@@ -10,6 +10,10 @@ class Context implements \ArrayAccess
 
     protected $container = array();
 
+    public function getContainer() {
+        return $this->container;
+    }
+
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {

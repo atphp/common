@@ -147,31 +147,33 @@ class EventAwareTest extends \PHPUnit_Framework_TestCase
      * Wildcard listener feature.
      *
      * @dataProvider dataProviderWildcartListener
+     * @group runme
      */
     public function testWildcartListener($events = array(), $event_alias = NULL)
     {
+        $return = false;
         $foo = $this->getFoo();
 
         // Attach wildcard listener
-        $foo->getEventManager()->attach(is_null($event_alias) ? array_keys($events) : '*', function($e) {
-            $e->getTarget()->increase('wildcardListener:' . __LINE__);
-        });
+        $foo->getEventManager()
+            ->attach(is_null($event_alias) ? array_keys($events) : '*', function(\Zend\EventManager\EventInterface $event) use (&$return) {
+                $return = true;
+            });
 
         // Action!
         foreach ($events as $method => $args) {
-            call_user_func_array(array($this, $method), $args);
+            call_user_func_array(array($foo, $method), $args);
         }
 
         // Assert
-        $this->assertEquals(count($events), $foo->counter);
+        $this->assertTrue($return);
     }
 
     public function dataProviderWildcartListener()
     {
-        return array(
-            array(array('full' => array('baz', 'bat'), 'noParams' => array())),
-            array(array('full' => array('baz', 'bat'), 'noParams' => array(), 'nothing' => array()), '*'),
-        );
+        $data[] = array(array('full' => array('baz', 'bat'), 'noParams' => array()));
+        $data[] = array(array('full' => array('baz', 'bat'), 'noParams' => array(), 'nothing' => array()), '*');
+        return $data;
     }
 
     /**

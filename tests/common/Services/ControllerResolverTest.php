@@ -7,13 +7,30 @@ use DateTime;
 class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 {
 
+    private function getControllerResolver()
+    {
+        return at_controller_resolver();
+    }
+
+    public function testFunction()
+    {
+        $this->assertEquals('time', $this->getControllerResolver()->get('time'));
+    }
+
+    public function testStaticMethod()
+    {
+        $this->assertEquals(
+            array('StaticMethodClass', 'staticMethod'),
+            $this->getControllerResolver()->get('StaticMethodClass::staticMethod')
+        );
+    }
+
     public function testObjectMethodPair()
     {
         $obj = new DateTime();
         $input = array($obj, 'foo');
         $expected = array($obj, 'foo');
-        $actual = at_controller_resolver()->get($input);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $this->getControllerResolver()->get($input));
     }
 
     public function testObjectInvoke()
@@ -49,6 +66,16 @@ class InvokableClass
     public function __invoke()
     {
         return $this->foo;
+    }
+
+}
+
+class StaticMethodClass
+{
+
+    public static function staticMethod($x)
+    {
+        return $x;
     }
 
 }

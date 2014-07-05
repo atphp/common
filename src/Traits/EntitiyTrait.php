@@ -21,13 +21,19 @@ trait EntitiyTrait
         }, $string);
     }
 
-    protected function getPropertyValue($pty)
+    /**
+     * Get a property in object.
+     *
+     * @param string $pty
+     * @return mixed
+     */
+    protected function getPropertyValue($pty, $include_null)
     {
         $return = $this->{$pty};
 
         $camelPty = $this->camelize($pty);
         $r_class = new ReflectionClass($this);
-        foreach (['get', 'is', 'has'] as $prefix) {
+        foreach (array('get', 'is', 'has') as $prefix) {
             $method = $prefix . $camelPty;
             if ($r_class->hasMethod($method) && $r_class->getMethod($method)->isPublic()) {
                 $return = $this->{$method}();
@@ -35,7 +41,7 @@ trait EntitiyTrait
         }
 
         if (is_object($return) && \method_exists($return, 'toArray')) {
-            $return = $return->toArray();
+            $return = $return->toArray($include_null);
         }
 
         return $return;
@@ -57,18 +63,33 @@ trait EntitiyTrait
         }
     }
 
-    public function toArray()
+    /**
+     * Represent object as array.
+     *
+     * @param boolean $include_null
+     * @return array
+     */
+    public function toArray($include_null = true)
     {
-        $array = [];
+        $array = array();
 
         foreach ((new ReflectionClass($this))->getProperties() as $pty) {
             /* @var $pty \ReflectionProperty */
-            $array[$pty->getName()] = $this->getPropertyValue($pty->getName());
+            $value = $this->getPropertyValue($pty->getName(), $include_null);
+            if ((null !== $value) || (null === $value && $include_null)) {
+                $array[$pty->getName()] = $value;
+            }
         }
 
         return $array;
     }
 
+    /**
+     * Simple fromArray factory.
+     *
+     * @param type $input
+     * @return \static
+     */
     public static function fromArray($input)
     {
         $me = new static();

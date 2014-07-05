@@ -16,6 +16,9 @@ class EntitiyTraitTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group atdev
+     */
     public function testFromToArray()
     {
         $father = PersonEntity::fromArray(array('name' => 'Andy T'));
@@ -30,6 +33,14 @@ class EntitiyTraitTest extends PHPUnit_Framework_TestCase
                 'father' => array('name' => 'Andy T', 'father' => null)
             ),
             $person->toArray()
+        );
+
+        $this->assertEquals(
+            array(
+                'name' => 'James T',
+                'father' => array('name' => 'Andy T')
+            ),
+            $person->toArray(false)
         );
     }
 

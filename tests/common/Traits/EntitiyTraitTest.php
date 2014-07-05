@@ -18,14 +18,17 @@ class EntitiyTraitTest extends PHPUnit_Framework_TestCase
 
     public function testFromToArray()
     {
-        $father = PersonEntity::fromArray(['name' => 'Andy T']);
-        $person = PersonEntity::fromArray(['name' => 'James T', 'father' => $father]);
+        $father = PersonEntity::fromArray(array('name' => 'Andy T'));
+        $person = PersonEntity::fromArray(array('name' => 'James T', 'father' => $father));
 
         $this->assertInstanceOf('AndyTruong\Common\Fixtures\Traits\PersonEntity', $father);
         $this->assertInstanceOf('AndyTruong\Common\Fixtures\Traits\PersonEntity', $person);
 
         $this->assertEquals(
-            ['name' => 'James T', 'father' => ['name' => 'Andy T', 'father' => null]],
+            array(
+                'name' => 'James T',
+                'father' => array('name' => 'Andy T', 'father' => null)
+            ),
             $person->toArray()
         );
     }

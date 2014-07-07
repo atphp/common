@@ -7,6 +7,7 @@ interface PluginInterface
 
     /**
      * Set definition for typed-data.
+     * @return Base
      */
     public function setDefinition($definition);
 
@@ -17,6 +18,7 @@ interface PluginInterface
 
     /**
      * Set input for typed-data.
+     * @return Base
      */
     public function setInput($value);
 
@@ -32,6 +34,7 @@ interface PluginInterface
 
     /**
      * Validate typed-data value.
+     * @return boolean
      */
     public function validate(&$error);
 }

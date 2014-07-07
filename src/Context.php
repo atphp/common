@@ -14,6 +14,9 @@ class Context implements \ArrayAccess
         return $this->container;
     }
 
+    /**
+     * @param string $offset
+     */
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -34,6 +37,9 @@ class Context implements \ArrayAccess
         unset($this->container[$offset]);
     }
 
+    /**
+     * @param string $offset
+     */
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;

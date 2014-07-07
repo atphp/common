@@ -46,6 +46,9 @@ class ControllerResolver extends EventAware
         $this->matchers[$input_type][] = $matcher;
     }
 
+    /**
+     * @param string $input_type
+     */
     public function getMatchers($input_type = NULL)
     {
         if (empty($this->matchers)) {

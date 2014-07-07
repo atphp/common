@@ -35,7 +35,7 @@ class EventAware implements EventManagerAwareInterface
     /**
      * Get event-manager object.
      *
-     * @return EventManager
+     * @return EventManagerInterface
      */
     public function getEventManager()
     {

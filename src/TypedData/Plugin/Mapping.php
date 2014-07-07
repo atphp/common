@@ -15,6 +15,9 @@ class Mapping extends MappingBase
         return $this->validateDefinition($error) && $this->validateInput($error);
     }
 
+    /**
+     * @param |null $error
+     */
     protected function validateDefinition(&$error)
     {
         if (!parent::validateDefinition($error)) {

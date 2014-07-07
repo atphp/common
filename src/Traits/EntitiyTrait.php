@@ -25,6 +25,7 @@ trait EntitiyTrait
      * Get a property in object.
      *
      * @param string $pty
+     * @param boolean $include_null
      * @return mixed
      */
     protected function getPropertyValue($pty, $include_null)
@@ -88,7 +89,7 @@ trait EntitiyTrait
      * Simple fromArray factory.
      *
      * @param type $input
-     * @return \static
+     * @return EntitiyTrait
      */
     public static function fromArray($input)
     {

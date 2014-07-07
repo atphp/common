@@ -5,10 +5,10 @@
  * Common functions
  */
 
-use AndyTruong\Common\ControllerResolver,
-    AndyTruong\Common\Context,
-    AndyTruong\Common\TypedData\Manager as TypedDataManager,
-    Zend\EventManager\EventManager;
+use AndyTruong\Common\ControllerResolver;
+use AndyTruong\Common\Context;
+use AndyTruong\Common\TypedData\Manager as TypedDataManager;
+use Zend\EventManager\EventManager;
 
 /**
  * Can not: new Thing()->doStuff();
@@ -136,7 +136,7 @@ function at_context($id = NULL, $value = NULL)
  *
  * @param array $definition
  * @param mixed $input
- * @return mixed
+ * @return AndyTruong\Common\TypedData\Plugin\PluginInterface
  * @throws \Exception
  */
 function at_data($definition, $input = NULL)

@@ -21,6 +21,7 @@ namespace AndyTruong\Common;
  */
 class ControllerResolver extends EventAware
 {
+
     /**
      * Name of event-manager.
      *
@@ -46,6 +47,12 @@ class ControllerResolver extends EventAware
         $this->matchers[$input_type][] = $matcher;
     }
 
+    /**
+     * Get matchers.
+     * 
+     * @param string $input_type
+     * @return array()
+     */
     public function getMatchers($input_type = NULL)
     {
         if (empty($this->matchers)) {

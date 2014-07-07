@@ -1,21 +1,28 @@
 <?php
+
 namespace AndyTruong\Common\TestCases\Services;
 
-use AndyTruong\Common\Context;
+use DateTime;
+use PHPUnit_Framework_TestCase;
 
-class ContextTest extends \PHPUnit_Framework_TestCase {
-    public function testInfo() {
+class ContextTest extends PHPUnit_Framework_TestCase
+{
+
+    public function testInfo()
+    {
         $this->assertInstanceOf('AndyTruong\Common\Context', at_context());
     }
 
-    private function getContext() {
+    private function getContext()
+    {
         return at_context();
     }
 
     /**
      * @dataProvider dataProviderGetSet
      */
-    public function testGetSet($key, $value) {
+    public function testGetSet($key, $value)
+    {
         $context = $this->getContext();
 
         // No value configured yet
@@ -36,7 +43,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider dataProviderGetSet
      */
-    public function testNullKey($key, $value) {
+    public function testNullKey($key, $value)
+    {
         $context = $this->getContext();
         $context[] = $value;
 
@@ -44,13 +52,17 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($value, array_pop($internal));
     }
 
-    public function dataProviderGetSet() {
+    public function dataProviderGetSet()
+    {
         return array(
-            array('number',  1),
-            array('string',  'Hello PHP'),
-            array('array',   array('Array')),
-            array('object',  new \DateTime()),
-            array('closure', function() { return 'closure'; })
+            array('number', 1),
+            array('string', 'Hello PHP'),
+            array('array', array('Array')),
+            array('object', new DateTime()),
+            array('closure', function() {
+                return 'closure';
+            })
         );
     }
+
 }

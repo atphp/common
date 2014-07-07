@@ -2,8 +2,8 @@
 
 namespace AndyTruong\Common;
 
-use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 
 /**
  * Extends this to make extensible class.
@@ -25,6 +25,12 @@ class EventAware implements EventManagerAwareInterface
      */
     protected $em_name;
 
+    /**
+     * Setter for event manager property.
+     * 
+     * @param EventManagerInterface $em
+     * @return EventAware
+     */
     public function setEventManager(EventManagerInterface $em)
     {
         $em->setIdentifiers(array(__CLASS__, get_called_class()));
@@ -35,7 +41,7 @@ class EventAware implements EventManagerAwareInterface
     /**
      * Get event-manager object.
      *
-     * @return EventManager
+     * @return EventManagerInterface
      */
     public function getEventManager()
     {

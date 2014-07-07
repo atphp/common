@@ -16,14 +16,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.8"
-        , "mustangostang/spyc": "0.5.*"
         , "zendframework/zend-eventmanager": "2.3.*@dev"
     },
     "require-dev": {
-      "phpunit/phpunit": "~3.7.0"
+        "phpunit/phpunit": "~3.7.0"
     },
     "autoload": {
-      "files": ["src/functions/fn.php" , "src/functions/spyc.php"],
+      "files": ["src/functions/fn.php"],
       "psr-4": {
         "AndyTruong\\Common\\": "src/"
       }

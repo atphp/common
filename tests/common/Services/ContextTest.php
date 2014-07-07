@@ -2,20 +2,23 @@
 
 namespace AndyTruong\Common\TestCases\Services;
 
+use AndyTruong\Common\Context;
 use DateTime;
 use PHPUnit_Framework_TestCase;
 
 class ContextTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testInfo()
-    {
-        $this->assertInstanceOf('AndyTruong\Common\Context', at_context());
-    }
-
     private function getContext()
     {
-        return at_context();
+        return new Context();
+    }
+
+    public function testInfo()
+    {
+        $context = $this->getContext();
+        $this->assertInstanceOf('AndyTruong\Common\Context', $context);
+        $this->assertInstanceOf('ArrayAccess', $context);
     }
 
     /**
@@ -32,7 +35,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
         // Test offsetSet()
         $context[$key] = $value;
-        $this->assertEquals($value, at_context($key));
+        $this->assertEquals($value, $context->offsetGet($key));
 
         // Test offsetUnset
         unset($context[$key]);

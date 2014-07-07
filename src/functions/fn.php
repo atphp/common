@@ -93,32 +93,6 @@ function at_controller_resolver()
 }
 
 /**
- * Container for request values.
- *
- * @param string $id
- * @param mixed $value
- * @return \Drupal\at_base\Context|mixed
- */
-function at_context($id = NULL, $value = NULL)
-{
-    static $context;
-
-    if (is_null($context)) {
-        $context = new Context();
-    }
-
-    if (!is_null($id) && is_null($value)) {
-        return $context->offsetGet($id);
-    }
-
-    if (!is_null($id) && !is_null($value)) {
-        return $context->offsetSet($id, $value);
-    }
-
-    return $context;
-}
-
-/**
  * Wrapper for typped-data, an API to make sure data provided is matched to its schema.
  *
  * Examples: Check test cases under ./tests/common/Services/TypedData/ for

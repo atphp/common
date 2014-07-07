@@ -2,14 +2,16 @@
 
 namespace AndyTruong\Common\TestCases\Services;
 
+use AndyTruong\Common\ControllerResolver;
 use DateTime;
+use PHPUnit_Framework_TestCase;
 
-class ControllerResolverTest extends \PHPUnit_Framework_TestCase
+class ControllerResolverTest extends PHPUnit_Framework_TestCase
 {
 
     private function getControllerResolver()
     {
-        return at_controller_resolver();
+        return new ControllerResolver();
     }
 
     public function testFunction()
@@ -20,8 +22,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
     public function testStaticMethod()
     {
         $this->assertEquals(
-            array('StaticMethodClass', 'staticMethod'),
-            $this->getControllerResolver()->get('StaticMethodClass::staticMethod')
+            array('StaticMethodClass', 'staticMethod'), $this->getControllerResolver()->get('StaticMethodClass::staticMethod')
         );
     }
 
@@ -42,7 +43,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
         $class = 'AndyTruong\Common\TestCases\Services\InvokableClass';
         $input = new $class();
-        $this->assertInstanceOf($class, at_controller_resolver()->get($input));
+        $this->assertInstanceOf($class, $this->getControllerResolver()->get($input));
     }
 
     public function testClassStringInvoke()
@@ -53,7 +54,7 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         }
 
         $input = $expected = 'AndyTruong\Common\TestCases\Services\InvokableClass';
-        $this->assertInstanceOf($expected, at_controller_resolver()->get($input));
+        $this->assertInstanceOf($expected, $this->getControllerResolver()->get($input));
     }
 
 }

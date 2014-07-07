@@ -83,16 +83,6 @@ function at_event_manager($name = 'default', $event_manager = NULL)
 }
 
 /**
- * Shortcut to controller resolver.
- *
- * @return \AndyTruong\Common\ControllerResolver
- */
-function at_controller_resolver()
-{
-    return new ControllerResolver();
-}
-
-/**
  * Wrapper for typped-data, an API to make sure data provided is matched to its schema.
  *
  * Examples: Check test cases under ./tests/common/Services/TypedData/ for

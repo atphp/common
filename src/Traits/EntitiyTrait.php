@@ -47,6 +47,13 @@ trait EntitiyTrait
         return $return;
     }
 
+    /**
+     * Set property.
+     *
+     * @param string $pty
+     * @param mixed $value
+     * @throws \RuntimeException
+     */
     public function setPropertyValue($pty, $value)
     {
         $method = 'set' . $this->camelize($pty);

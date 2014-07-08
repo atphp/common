@@ -60,6 +60,11 @@ trait EntitiyTrait
         $r_class = new ReflectionClass($this);
 
         if ($r_class->hasMethod($method) && $r_class->getMethod($method)->isPublic()) {
+            if (is_array($value) && $type_hint = $r_class->getMethod($method)->getParameters()[0]->getClass()) {
+                if (method_exists($type_hint->getName(), 'fromArray')) {
+                    $value = call_user_func([$type_hint->getName(), 'fromArray'], $value);
+                }
+            }
             $this->{$method}($value);
         }
         elseif ($r_class->hasProperty($pty) && $r_class->getProperty($pty)->isPublic()) {

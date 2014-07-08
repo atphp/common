@@ -76,7 +76,7 @@ trait EntitiyTrait
      * @param boolean $include_null
      * @return array
      */
-    public function toArray($include_null = true)
+    public function toArray($include_null = false)
     {
         $array = array();
 

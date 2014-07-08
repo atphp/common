@@ -99,8 +99,8 @@ trait EntitiyTrait
     /**
      * Simple fromArray factory.
      *
-     * @param type $input
-     * @return \static
+     * @param array $input
+     * @return static
      */
     public static function fromArray($input)
     {

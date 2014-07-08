@@ -113,4 +113,27 @@ trait EntitiyTrait
         return $me;
     }
 
+    /**
+     * Represent object in json format.
+     *
+     * @param boolean $include_null
+     * @param int $options
+     * @return string
+     */
+    public function toJSON($include_null = false, $options = 0)
+    {
+        return json_encode($this->toArray($include_null), $options);
+    }
+
+    /**
+     * Create new object from json string.
+     *
+     * @param string $input
+     * @return static
+     */
+    public static function fromJSON($input)
+    {
+        return static::fromArray(json_decode($input, true));
+    }
+
 }

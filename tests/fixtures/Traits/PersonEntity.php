@@ -36,7 +36,7 @@ class PersonEntity
         return $this;
     }
 
-    public function setFather($father)
+    public function setFather(PersonEntity $father)
     {
         $this->father = $father;
         return $this;

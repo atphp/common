@@ -2,7 +2,10 @@
 
 namespace AndyTruong\Common\Traits;
 
+use AndyTruong\Common\TestCases\Traits\EntitiyTraitTest;
 use ReflectionClass;
+use ReflectionProperty;
+use RuntimeException;
 
 trait EntitiyTrait
 {
@@ -71,7 +74,7 @@ trait EntitiyTrait
             $this->{$pty} = $value;
         }
         else {
-            throw new \RuntimeException(sprintf('Object.%s is not writable.', $pty));
+            throw new RuntimeException(sprintf('Object.%s is not writable.', $pty));
         }
     }
 
@@ -86,7 +89,7 @@ trait EntitiyTrait
         $array = array();
 
         foreach ((new ReflectionClass($this))->getProperties() as $pty) {
-            /* @var $pty \ReflectionProperty */
+            /* @var $pty ReflectionProperty */
             $value = $this->getPropertyValue($pty->getName(), $include_null);
             if ((null !== $value) || (null === $value && $include_null)) {
                 $array[$pty->getName()] = $value;
@@ -100,7 +103,7 @@ trait EntitiyTrait
      * Simple fromArray factory.
      *
      * @param array $input
-     * @return static
+     * @return EntitiyTraitTest
      */
     public static function fromArray($input)
     {

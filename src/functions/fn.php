@@ -4,11 +4,9 @@
  * @file fn.php
  * Common functions
  */
-
-use AndyTruong\Common\ControllerResolver,
-    AndyTruong\Common\Context,
-    AndyTruong\Common\TypedData\Manager as TypedDataManager,
-    Zend\EventManager\EventManager;
+use AndyTruong\Common\TypedData\Manager as TypedDataManager;
+use AndyTruong\Common\TypedData\Plugin\PluginInterface;
+use Zend\EventManager\EventManager;
 
 /**
  * Can not: new Thing()->doStuff();
@@ -100,12 +98,12 @@ function at_event_manager($name = 'default', $event_manager = NULL)
  *
  * @param array $definition
  * @param mixed $input
- * @return mixed
+ * @return PluginInterface
  * @throws \Exception
  */
 function at_data($definition, $input = NULL)
 {
-    static $manager;
+    static $manager = null;
 
     if (is_null($manager)) {
         $manager = new TypedDataManager();

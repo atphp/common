@@ -5,6 +5,9 @@ namespace AndyTruong\Common\Traits;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
 
+/**
+ * This Trait is only available when we use this library with symfony/validator:~2.5.0.
+ */
 trait ValidatorAwareTrait
 {
 

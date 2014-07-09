@@ -5,7 +5,7 @@ namespace AndyTruong\Common\Fixtures\Traits;
 class PersonEntity
 {
 
-    use \AndyTruong\Common\Traits\EntitiyTrait;
+    use \AndyTruong\Common\Traits\EntityTrait;
 
     /**
      * Name of Person.

@@ -7,7 +7,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use RuntimeException;
 
-trait EntitiyTrait
+trait EntityTrait
 {
 
     /**

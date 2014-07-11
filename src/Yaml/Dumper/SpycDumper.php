@@ -7,7 +7,8 @@ class SpycDumper implements YamlDumperInterface
 
     public function dump($input, $inline = 0, $indent = 0, $exceptionOnInvalidType = false, $objectSupport = false)
     {
-        return spyc_dump($input);
+        $spyc = new \Spyc();
+        return $spyc->dump($input, false, false);
     }
 
 }

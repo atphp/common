@@ -3,9 +3,9 @@
 namespace AndyTruong\Common\TestCases\Traits;
 
 use AndyTruong\Common\Fixtures\Traits\CacheAwareClass;
-use PHPUnit_Framework_TestCase;
+use Symfony\Component\Validator\Exception\RuntimeException;
 
-class CacheAwareTraitTest extends PHPUnit_Framework_TestCase
+class CacheAwareTraitTest extends TraitTestCase
 {
 
     public function testDefaultProvider()
@@ -36,7 +36,6 @@ class CacheAwareTraitTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException RuntimeException
      * @expectedExceptionMessage Cache provider must implement Doctrine\Common\Cache\Cache interface: DateTime.
-     * @group cache
      */
     public function testWrongProviderInterface()
     {

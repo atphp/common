@@ -4,8 +4,8 @@ namespace AndyTruong\Common\Yaml;
 
 use AndyTruong\Common\Yaml\Dumper\PHPExtensionDumper;
 use AndyTruong\Common\Yaml\Dumper\SpycDumper;
+use AndyTruong\Common\Yaml\Dumper\SymfonyYamlDumper;
 use RuntimeException;
-use Symfony\Component\Yaml\Dumper as SymfonyYamlDumper;
 
 class YamlDumper
 {

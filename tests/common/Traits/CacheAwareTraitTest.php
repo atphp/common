@@ -17,7 +17,7 @@ class CacheAwareTraitTest extends TraitTestCase
     public function testSetProvider()
     {
         $obj = new CacheAwareClass();
-        $obj->setCacheProvider('custom_service', 'Doctrine\\Common\\Cache\\FilesystemCache', ['/tmp/at-common']);
+        $obj->setCacheProvider('custom_service', 'Doctrine\\Common\\Cache\\FilesystemCache', array('/tmp/at-common'));
         $this->assertInstanceOf('Doctrine\Common\Cache\Cache', $obj->getCacheProvider('custom_service'));
         $this->assertInstanceOf('Doctrine\Common\Cache\FilesystemCache', $obj->getCacheProvider('custom_service'));
         return $obj;

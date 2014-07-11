@@ -69,7 +69,7 @@ trait CacheAwareTrait
      *
      * @param string $service
      */
-    public function getCacheProvider($service)
+    public function getCacheProvider($service = 'default')
     {
         $class = isset($this->cache_providers[$service]) ? $this->cache_providers[$service] : $this->cache_providers['default'];
         $params = isset($this->cache_providers[$service]) ? $this->cache_providers[$service] : null;

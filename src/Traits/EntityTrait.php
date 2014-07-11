@@ -7,6 +7,11 @@ use ReflectionClass;
 use ReflectionProperty;
 use RuntimeException;
 
+/**
+ * Trait provide fromArray() and toArray methods, simple way for serialization.
+ * 
+ * @see AndyTruong\Common\TestCases\Traits\EntitiyTraitTest
+ */
 trait EntityTrait
 {
 

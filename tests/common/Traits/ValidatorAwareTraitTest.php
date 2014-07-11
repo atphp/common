@@ -3,19 +3,10 @@
 namespace AndyTruong\Common\TestCases\Traits;
 
 use AndyTruong\Common\Fixtures\Traits\ValidatorAwareClass;
-use PHPUnit_Framework_TestCase;
+use Symfony\Component\Validator\ValidatorBuilder;
 
-class ValidatorAwareTraitTest extends PHPUnit_Framework_TestCase
+class ValidatorAwareTraitTest extends TraitTestCase
 {
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (-1 === \version_compare(\phpversion(), '5.4')) {
-            $this->markTestSkipped('Trait is only available in PHP 5.4');
-        }
-    }
 
     /**
      * @group atvalidate
@@ -27,7 +18,7 @@ class ValidatorAwareTraitTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\Validator\Validator\ValidatorInterface', $object->getValidator());
 
         // validator is injectable — check setValidator() method.
-        $builder = new \Symfony\Component\Validator\ValidatorBuilder();
+        $builder = new ValidatorBuilder();
         $builder->addMethodMapping('simpleMethodMapping');
         $validator = $builder->getValidator();
         $object->setValidator($validator);

@@ -7,6 +7,8 @@ use Symfony\Component\Validator\ValidatorBuilder;
 
 /**
  * This Trait is only available when we use this library with symfony/validator:~2.5.0.
+ *
+ * @see AndyTruong\Common\TestCases\Traits\ValidatorAwareTraitTest
  */
 trait ValidatorAwareTrait
 {

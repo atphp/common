@@ -3,19 +3,9 @@
 namespace AndyTruong\Common\TestCases\Traits;
 
 use AndyTruong\Common\Fixtures\Traits\PersonEntity;
-use PHPUnit_Framework_TestCase;
 
-class EntitiyTraitTest extends PHPUnit_Framework_TestCase
+class EntitiyTraitTest extends TraitTestCase
 {
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (-1 === \version_compare(\phpversion(), '5.4')) {
-            $this->markTestSkipped('Trait is only available in PHP 5.4');
-        }
-    }
 
     /**
      * @group atdev

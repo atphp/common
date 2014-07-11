@@ -8,23 +8,13 @@ php:
     - hhvm
     - hhvm-nightly
 
-env:
-    - YAML=symfony
-    - YAML=spyc
-    - YAML=extension
-
 matrix:
     allow_failures:
         - php: hhvm-nightly
     fast_finish: true
 
 before_script:
-    - phpenv version-name
     - composer install --prefer-source
-    - sh -c "if [ '$YAML' = 'symfony' ]; then echo ''; fi"
-    - sh -c "if [ '$YAML' = 'spyc' ]; then composer require mustangostang/spyc:~0.5.0; fi"
-    - sh -c "if [ '$YAML' = 'extension' ]; then pecl install yaml; fi"
-    - sh -c "if [ '$YAML' = 'extension' ]; echo 'extension=<extension>.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi"
 
 script: ./vendor/bin/phpunit --coverage-text
 

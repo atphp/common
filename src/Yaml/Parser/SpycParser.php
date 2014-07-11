@@ -3,6 +3,7 @@
 namespace AndyTruong\Common\Yaml\Parser;
 
 use AndyTruong\Common\Yaml\Parser\YamlParserInterface;
+use Spyc;
 
 class SpycParser implements YamlParserInterface
 {

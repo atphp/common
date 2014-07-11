@@ -67,10 +67,10 @@ class YamlTest extends PHPUnit_Framework_TestCase
 
         if ($available) {
             $o1 = $real_dumper->dump(array('key' => 'value'), true);
-            $this->assertEquals("key: value", trim($o1, "-\n"));
+            $this->assertEquals("key: value", trim($o1, "-\n."));
 
             $o2 = $real_dumper->dump(array('name' => 'Drupal', 'age' => 13), true);
-            $this->assertEquals("name: Drupal\nage: 13", trim($o2, "-\n"));
+            $this->assertEquals("name: Drupal\nage: 13", trim($o2, "-\n."));
         }
     }
 

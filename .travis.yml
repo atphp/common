@@ -8,6 +8,10 @@ php:
     - hhvm
     - hhvm-nightly
 
+en:
+    - YAML=symfony
+    - YAML=spyc
+
 matrix:
     allow_failures:
         - php: hhvm-nightly
@@ -15,6 +19,8 @@ matrix:
 
 before_script:
     - composer install --prefer-source
+    - sh -c "if [ '$YAML' = 'symfony' ]; then echo ''; fi"
+    - sh -c "if [ '$YAML' = 'spyc' ]; then composer require mustangostang/spyc:~0.5.0; fi"
 
 script: ./vendor/bin/phpunit --coverage-text
 

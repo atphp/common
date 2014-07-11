@@ -8,7 +8,7 @@ php:
     - hhvm
     - hhvm-nightly
 
-en:
+env:
     - YAML=symfony
     - YAML=spyc
 

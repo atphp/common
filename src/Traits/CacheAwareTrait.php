@@ -7,6 +7,19 @@ use RuntimeException;
 
 /**
  * This Trait is only available when we use this library with doctrine/cache:~1.3.0.
+ *
+ * Use this if you would like to have cache functionality for you class.
+ *
+ * Example:
+ *
+ *  class MyClass {
+ *      use AndyTruong\Common\Traits\CacheAwareTrait;
+ *
+ *      public function myAction() {
+ *          $cache = $this->getCacheProvider();
+ *          $cache->get(…);
+ *      }
+ *  }
  */
 trait CacheAwareTrait
 {

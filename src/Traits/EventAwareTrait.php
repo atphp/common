@@ -29,7 +29,7 @@ trait EventAwareTrait
     /**
      * Inject dispatcher.
      *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
+     * @param EventDispatcherInterface $dispatcher
      */
     public function setDispatcher(EventDispatcherInterface $dispatcher)
     {
@@ -39,7 +39,7 @@ trait EventAwareTrait
     /**
      * Get dispatcher.
      *
-     * @return type
+     * @return EventDispatcherInterface
      */
     public function getDispatcher()
     {
@@ -54,7 +54,7 @@ trait EventAwareTrait
      * Generate default dispatcher, override this if your class would like to
      * provide an other default dispatcher.
      *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     * @return EventDispatcher
      */
     protected function getDefaultDispatcher()
     {
@@ -64,9 +64,9 @@ trait EventAwareTrait
     /**
      * Shortcut to dispatch an event.
      *
-     * @param type $event_name
-     * @param \Symfony\Component\EventDispatcher\Event $event
-     * @return type
+     * @param string $event_name
+     * @param Event $event
+     * @return Event
      */
     public function dispatch($event_name, Event $event = null)
     {

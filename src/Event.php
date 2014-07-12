@@ -60,6 +60,28 @@ class Event extends BaseEvent
     }
 
     /**
+     * Get the event target
+     *
+     * This may be either an object, or the name of a static method.
+     *
+     * @return string|object
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Get all parameters
+     *
+     * @return array|object|ArrayAccess
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
      * Set params.
      *
      * @param array|ArrayAccess|object $params

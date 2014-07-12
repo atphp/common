@@ -12,13 +12,13 @@ class PersonEntity
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Reference to Father.
      * @var PersonEntity
      */
-    private $father;
+    protected $father;
 
     public function getName()
     {

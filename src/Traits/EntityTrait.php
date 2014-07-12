@@ -9,7 +9,7 @@ use RuntimeException;
 
 /**
  * Trait provide fromArray() and toArray methods, simple way for serialization.
- * 
+ *
  * @see AndyTruong\Common\TestCases\Traits\EntitiyTraitTest
  */
 trait EntityTrait
@@ -48,7 +48,7 @@ trait EntityTrait
             }
         }
 
-        if (is_object($return) && \method_exists($return, 'toArray')) {
+        if (is_object($return) && method_exists($return, 'toArray')) {
             $return = $return->toArray($include_null);
         }
 

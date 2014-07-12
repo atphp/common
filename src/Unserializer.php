@@ -59,7 +59,7 @@ class Unserializer
             $this->{$pty} = $value;
         }
         else {
-            throw new RuntimeException(sprintf('Object.%s is not writable.', $pty));
+            throw new RuntimeException(sprintf('%s.%s is not writable.', get_class($obj), $pty));
         }
     }
 

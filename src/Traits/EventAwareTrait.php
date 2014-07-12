@@ -73,4 +73,17 @@ trait EventAwareTrait
         return $this->getDispatcher()->dispatch($event_name, $event);
     }
 
+    /**
+     * Dispatch an event with extra params.
+     * 
+     * @param string $event_name
+     * @param string|object $target
+     * @param array|ArrayAccess $params
+     */
+    public function trigger($event_name, $target, $params)
+    {
+        $event = new \AndyTruong\Common\Event($event_name, $target, $params);
+        return $this->getDispatcher()->dispatch($event_name, $event);
+    }
+
 }

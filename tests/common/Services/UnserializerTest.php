@@ -22,4 +22,15 @@ class UnserializerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Andy T.', $person->getFather()->getName());
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage AndyTruong\Common\Fixtures\Person.country is not writable.
+     */
+    public function testWrongCase()
+    {
+        $unserializer = new Unserializer();
+        $person_array = array('name' => 'Matt T.', 'country' => 'Vietnam');
+        $person = $unserializer->fromArray($person_array, 'AndyTruong\Common\Fixtures\Person');
+    }
+
 }

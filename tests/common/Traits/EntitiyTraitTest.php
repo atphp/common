@@ -4,12 +4,12 @@ namespace AndyTruong\Common\TestCases\Traits;
 
 use AndyTruong\Common\Fixtures\Traits\PersonEntity;
 
+/**
+ * @group entitytrait
+ */
 class EntitiyTraitTest extends TraitTestCase
 {
 
-    /**
-     * @group atdev
-     */
     public function testFromToArray()
     {
         $father = PersonEntity::fromArray(array('name' => 'Andy T'));
@@ -31,9 +31,6 @@ class EntitiyTraitTest extends TraitTestCase
         );
     }
 
-    /**
-     * @group indev
-     */
     public function testFromToJSON()
     {
         $andyt = '{ "name": "Andy T" }';

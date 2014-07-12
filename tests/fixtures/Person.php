@@ -1,11 +1,9 @@
 <?php
 
-namespace AndyTruong\Common\Fixtures\Traits;
+namespace AndyTruong\Common\Fixtures;
 
-class PersonEntity
+class Person
 {
-
-    use \AndyTruong\Common\Traits\EntityTrait;
 
     /**
      * Name of Person.
@@ -16,7 +14,7 @@ class PersonEntity
 
     /**
      * Reference to Father.
-     * @var PersonEntity
+     * @var Person
      */
     protected $father;
 
@@ -36,7 +34,7 @@ class PersonEntity
         return $this;
     }
 
-    public function setFather(PersonEntity $father)
+    public function setFather(Person $father)
     {
         $this->father = $father;
         return $this;

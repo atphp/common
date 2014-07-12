@@ -47,8 +47,8 @@ class Unserializer
         if ($r_class->hasMethod($method) && $r_class->getMethod($method)->isPublic()) {
             // object's property should be an other object, cast it here
             if (is_array($value)) {
-                if ($type_hint = $r_class->getMethod($method)->getParameters()[0]->getClass()) {
-                    $value = $this->fromArray($value, $type_hint->getName());
+                if ($type_hint = $r_class->getMethod($method)->getParameters()) {
+                    $value = $this->fromArray($value, $type_hint[0]->getClass()->getName());
                 }
             }
 
@@ -83,7 +83,7 @@ class Unserializer
 
     /**
      * Convert json string to object.
-     * 
+     *
      * @param string $json
      * @param string $class_name
      */

@@ -33,9 +33,8 @@ class EventAwareTraitTest extends TraitTestCase
     public function testDispatchShortcut()
     {
         $obj = new EventAwareClass();
-        $dispatcher = $obj->getDispatcher();
-        $dispatcher->addListener('my_event', function(Event $event) {
-            throw new \RuntimeException('Event is executed.');
+        $obj->getDispatcher()->addListener('my_event', function(Event $event) {
+            throw new RuntimeException2('Event is executed.');
         });
         $obj->dispatch('my_event');
     }

@@ -61,7 +61,6 @@ class YamlParser
      */
     public function parse($value, $exceptionOnInvalidType = false, $objectSupport = false, $objectForMap = false)
     {
-        print_r($this->getRealParser());
         return $this->getRealParser()->parse($value, $exceptionOnInvalidType, $objectSupport, $objectForMap);
     }
 

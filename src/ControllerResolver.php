@@ -49,7 +49,7 @@ class ControllerResolver extends EventAware
 
     /**
      * Get matchers.
-     * 
+     *
      * @param string $input_type
      * @return array()
      */
@@ -62,7 +62,7 @@ class ControllerResolver extends EventAware
             $this->addMatcher(array($this, 'detectMagic'), 'object');
 
             // Developers can hook to this event to add more matchers.
-            $this->getEventManager()->trigger('at.controller_resolver.info', $this);
+            $this->trigger('at.controller_resolver.info', $this);
         }
 
         $matchers = isset($this->matchers[$input_type]) ? $this->matchers[$input_type] : array();

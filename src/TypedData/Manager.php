@@ -45,7 +45,7 @@ class Manager extends EventAware
     protected function loadPlugin($id)
     {
         if (!isset(self::$plugins[$id])) {
-            $this->getEventManager()->trigger('at.typed_data.plugin.load', $this, array('id' => $id));
+            $this->trigger('at.typed_data.plugin.load', $this, array('id' => $id));
         }
 
         if (isset(self::$plugins[$id]) && class_exists(self::$plugins[$id])) {

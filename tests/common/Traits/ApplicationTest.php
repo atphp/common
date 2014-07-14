@@ -4,6 +4,7 @@ namespace AndyTruong\Common\TestCases\Traits;
 
 use AndyTruong\Common\Fixtures\Traits\Application\DemoApplication;
 use AndyTruong\Common\TestCases\Traits\TraitTestCase;
+use AndyTruong\Common\Traits\Application\BaseApplication;
 
 /**
  * @group app
@@ -16,7 +17,14 @@ class ApplicationTest extends TraitTestCase
      */
     public function getApplication()
     {
-        return new DemoApplication();
+        $config_file = dirname(dirname(__DIR__)) . '/fixtures/Traits/Application/config/config.yml';
+        return new BaseApplication($config_file);
+    }
+
+    public function testServices()
+    {
+        $app = $this->getApplication();
+        $this->assertInstanceof('Symfony\\Component\\EventDispatcher\\EventDispatcherInterface', $app->getDispatcher());
     }
 
     public function testGetSet()

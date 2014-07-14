@@ -89,7 +89,7 @@ class EventAware
      * @param string|object $target
      * @param array|ArrayAccess $params
      */
-    public function trigger($event_name, $target, $params = [])
+    public function trigger($event_name, $target, $params = array())
     {
         $event = new Event($event_name, $target, $params);
         return $this->getDispatcher()->dispatch($event_name, $event);

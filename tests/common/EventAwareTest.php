@@ -2,194 +2,79 @@
 
 namespace AndyTruong\Common\TestCases;
 
-use Zend\EventManager\SharedEventManager;
+use AndyTruong\Common\Event;
+use AndyTruong\Common\Fixtures\EventAwareClass;
+use PHPUnit_Framework_TestCase;
+use RuntimeException;
 
-class Foo extends \AndyTruong\Common\EventAware
+/**
+ * @group event
+ */
+class EventAwareTest extends PHPUnit_Framework_TestCase
 {
 
-    public $counter = 0;
-    public $logs = array();
-
-    public function increase($msg = '')
+    private function getEventAwareObject()
     {
-        $this->counter++;
-        if (!empty($msg)) {
-            $this->logs[] = $msg;
-        }
-    }
-
-    public function nothing()
-    {
-        $this->getEventManager()->trigger(__FUNCTION__);
-    }
-
-    public function noParams()
-    {
-        $this->getEventManager()->trigger(__FUNCTION__, $this);
-    }
-
-    public function full($baz, $bat = null)
-    {
-        $params = compact('baz', 'bat');
-        $this->getEventManager()->trigger(__FUNCTION__, $this, $params);
-    }
-
-    public function triggerUntil()
-    {
-        $this->getEventManager()->triggerUntil(__FUNCTION__, $this, array(), function($v) {
-            return 'STOP' === $v;
-        });
-    }
-
-    public function stopPropagation()
-    {
-        $this->getEventManager()->trigger(__FUNCTION__, $this);
+        return new EventAwareClass();
     }
 
     /**
-     * @return ResponseCollection
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Listener is trigged
      */
-    public function collectValues()
+    public function testDispatch()
     {
-        return $this->getEventManager()->trigger(__FUNCTION__, $this);
-    }
-
-}
-
-class EventAwareTest extends \PHPUnit_Framework_TestCase
-{
-
-    public function getFoo()
-    {
-        $foo = new Foo();
-        $this->assertEquals(0, $foo->counter);
-
-        // Clear all previous listeners
-        $foo->getEventManager()->unsetSharedManager();
-        foreach ($foo->getEventManager()->getEvents() as $event) {
-            $foo->getEventManager()->clearListeners($event);
-        }
-
-        return $foo;
-    }
-
-    public function testTrigger()
-    {
-        $foo = new Foo();
-
-        // @event nothing
-        $foo->getEventManager()->attach('nothing', function ($e) use ($foo) {
-            $foo->increase('trigger:nothing');
+        $obj = $this->getEventAwareObject();
+        $obj->getDispatcher()->addListener('nothing', function ($e) use ($obj) {
+            throw new RuntimeException('Listener is trigged');
         });
-        $foo->nothing();
-        $this->assertEquals(1, $foo->counter);
-
-        // @event noParams, fire event without params.
-        $foo->getEventManager()->attach('noParams', function ($e) {
-            $e->getTarget()->increase('trigger:noParams');
-        });
-        $foo->noParams();
-        $this->assertEquals(2, $foo->counter);
-
-        // @event basic
-        $foo->getEventManager()->attach('full', function ($e) {
-            $e->getTarget()->increase('trigger:full');
-        });
-        $foo->full('baz', 'bat');
-        $this->assertEquals(3, $foo->counter);
-
-        // @event triggerUntil
-        $foo->getEventManager()->attach('triggerUntil', function ($e) {
-            $e->getTarget()->increase('trigger:triggerUntil:1');
-        });
-        $foo->getEventManager()->attach('triggerUntil', function ($e) {
-            $e->getTarget()->increase('trigger:triggerUntil:2');
-            return 'STOP';
-        });
-        $foo->getEventManager()->attach('triggerUntil', function ($e) {
-            $e->getTarget()->increase('trigger:triggerUntil:3');
-        });
-        $foo->triggerUntil();
-        $this->assertEquals(5, $foo->counter);
-    }
-
-    public function testCollection()
-    {
-        $foo = $this->getFoo();
-
-        // @event stopPropagation, a listener can break the listeners loop.
-        $foo->getEventManager()->attach('stopPropagation', function ($e) {
-            $e->getTarget()->increase('collection:stop:1');
-            $e->stopPropagation();
-        });
-        $foo->getEventManager()->attach('stopPropagation', function ($e) {
-            $e->getTarget()->increase('collection:stop:2');
-        });
-        $foo->stopPropagation();
-        $this->assertEquals(1, $foo->counter, 'First listener breaks others');
-
-        // @event collectValues
-        $foo->getEventManager()->attach('collectValues', function ($e) {
-            return 'A';
-        });
-        $foo->getEventManager()->attach('collectValues', function ($e) {
-            return 'B';
-        });
-        $foo->getEventManager()->attach('collectValues', function ($e) {
-            return 'C';
-        });
-        $values = $foo->collectValues();
-        $this->assertEquals('Zend\EventManager\ResponseCollection', get_class($values));
-        $this->assertEquals(3, $values->count());
+        $obj->nothing();
     }
 
     /**
-     * Wildcard listener feature.
-     *
-     * @dataProvider dataProviderWildcartListener
-     * @group runme
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Listener is trigged
      */
-    public function testWildcartListener($events = array(), $event_alias = NULL)
+    public function testTriggerNoParam()
     {
-        $return = false;
-        $foo = $this->getFoo();
-
-        // Attach wildcard listener
-        $foo->getEventManager()
-            ->attach(is_null($event_alias) ? array_keys($events) : '*', function(\Zend\EventManager\EventInterface $event) use (&$return) {
-                $return = true;
-            });
-
-        // Action!
-        foreach ($events as $method => $args) {
-            call_user_func_array(array($foo, $method), $args);
-        }
-
-        // Assert
-        $this->assertTrue($return);
-    }
-
-    public function dataProviderWildcartListener()
-    {
-        $data[] = array(array('full' => array('baz', 'bat'), 'noParams' => array()));
-        $data[] = array(array('full' => array('baz', 'bat'), 'noParams' => array(), 'nothing' => array()), '*');
-        return $data;
+        $obj = $this->getEventAwareObject();
+        $obj->getDispatcher()->addListener('noParams', function ($e) {
+            throw new RuntimeException('Listener is trigged');
+        });
+        $obj->noParams();
     }
 
     /**
-     * SharedEventManager feature.
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Listener is trigged: baz, bat
      */
-    public function testSharedEventManager()
+    public function testTriggerFullOptions()
     {
-        $event = new SharedEventManager();
-        $event->attach('AndyTruong\Common\TestCases\Foo', 'noParams', function($e) {
-            $e->getTarget()->increase('sharedEvent:noParams');
+        $obj = $this->getEventAwareObject();
+        $obj->getDispatcher()->addListener('full', function (Event $e) {
+            throw new RuntimeException('Listener is trigged: ' . implode(', ', $e->getParams()));
+        });
+        $obj->full('baz', 'bat');
+    }
+
+    public function testTriggerUntil()
+    {
+        $stopped_at = null;
+
+        $obj = $this->getEventAwareObject();
+
+        $obj->getDispatcher()->addListener('custom_event', function($event) use (&$stopped_at) {
+            $stopped_at = 'ONE';
+            $event->stopPropagation();
         });
 
-        $foo = $this->getFoo();
-        $foo->getEventManager()->setSharedManager($event);
-        $foo->noParams();
-        $this->assertEquals(1, $foo->counter);
+        $obj->getDispatcher()->addListener('custom_event', function($event) use (&$stopped_at) {
+            $stopped_at = 'TWO';
+        });
+
+        $obj->dispatch('custom_event');
+
+        $this->assertEquals('ONE', $stopped_at);
     }
 
 }

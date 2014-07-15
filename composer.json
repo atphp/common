@@ -16,12 +16,12 @@
     "require": {
         "php": ">=5.3.8"
         , "andytruong/event": "~0.1.0"
-        , "andytruong/phpfns": "~0.1.0"
         , "andytruong/serializer": "~0.1.0"
         , "andytruong/yaml": "~0.1.0"
     },
     "suggest": {
         "andytruong/typed_data": "~0.1.0"
+        , "andytruong/phpfns": "~0.1.0"
         , "doctrine/cache": "~1.3.0"
         , "symfony/validator": "~2.5.0"
     },

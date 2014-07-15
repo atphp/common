@@ -19,7 +19,8 @@
         , "andytruong/yaml": "~0.1.0"
     },
     "suggest": {
-        "doctrine/cache": "~1.3.0"
+        "andytruong/typed_data": "~0.1.0"
+        , "doctrine/cache": "~1.3.0"
         , "doctrine/orm": "~2.4.0"
         , "mustangostang/spyc": "0.5.*"
         , "symfony/validator": "~2.5.0"

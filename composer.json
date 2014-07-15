@@ -31,7 +31,6 @@
         , "symfony/validator": "~2.5.0"
     },
     "autoload": {
-      "files": ["src/functions/fn.php"],
       "psr-4": {
         "AndyTruong\\Common\\": "src/"
       }

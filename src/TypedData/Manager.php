@@ -2,8 +2,9 @@
 
 namespace AndyTruong\Common\TypedData;
 
-use AndyTruong\Common\EventAware;
 use AndyTruong\Common\TypedData\Plugin\PluginInterface;
+use AndyTruong\Event\EventAware;
+use Exception;
 
 /**
  * Manager for typed-data feature.
@@ -34,7 +35,7 @@ class Manager extends EventAware
     public function registerPlugin($id, $class_name)
     {
         if (isset(self::$plugins[$id])) {
-            throw new \Exception('Typed-data plugin is already registered: ' . strip_tags($id));
+            throw new Exception('Typed-data plugin is already registered: ' . strip_tags($id));
         }
 
         $self::$plugins[$id] = $class_name;
@@ -54,12 +55,12 @@ class Manager extends EventAware
             $implemented_interfaces = class_implements($obj);
             if (!in_array($expected_interface, $implemented_interfaces)) {
                 $msg = sprintf('Class for typed data %s does not implement %s', strip_tags($id), $expected_interface);
-                throw new \Exception($msg);
+                throw new Exception($msg);
             }
             return $obj;
         }
 
-        throw new \Exception('Unknow typed-data plugin: ' . strip_tags($id));
+        throw new Exception('Unknow typed-data plugin: ' . strip_tags($id));
     }
 
     /**
@@ -96,11 +97,11 @@ class Manager extends EventAware
     public function getPlugin($definition, $input)
     {
         if (!is_array($definition)) {
-            throw new \Exception('Definition must be an array.');
+            throw new Exception('Definition must be an array.');
         }
 
         if (!isset($definition['type'])) {
-            throw new \Exception('Missing type key');
+            throw new Exception('Missing type key');
         }
 
         $plugin = $this->findPluginFromDefinition($definition);

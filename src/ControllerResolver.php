@@ -2,6 +2,8 @@
 
 namespace AndyTruong\Common;
 
+use AndyTruong\Event\EventAware;
+
 /**
  *
  * Get controller from definition.

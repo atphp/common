@@ -16,6 +16,7 @@
     "require": {
         "php": ">=5.3.8"
         , "andytruong/event": "~0.1.0"
+        , "andytruong/phpfns": "~0.1.0"
         , "andytruong/serializer": "~0.1.0"
         , "andytruong/yaml": "~0.1.0"
     },

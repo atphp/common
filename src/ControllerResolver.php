@@ -17,7 +17,7 @@ use AndyTruong\Event\EventAware;
  * Example:
  *
  *  use AndyTruong\Common\ControllerResolver;
- *  $callable = at_id(new ControllerResolver())->get($input);
+ *  $callable = (new ControllerResolver())->get($input);
  *
  * @consider Provide `at.controller_resolver.info` event, let developer can provide more matchers.
  */

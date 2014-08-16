@@ -12,12 +12,11 @@
          bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="Common Test Suite">
-            <directory>./tests/common/*</directory>
-            <directory>./tests/common/*/*</directory>
+            <directory>./tests/*</directory>
         </testsuite>
     </testsuites>
     <logging>
-      <log type="coverage-text" target="php://stdout"/>
+        <log type="coverage-text" target="php://stdout"/>
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

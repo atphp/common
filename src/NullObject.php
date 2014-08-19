@@ -6,7 +6,7 @@ class NullObject
 {
 
     public $called = [];
-    public static $static_called = [];
+    public static $static_called = array();
 
     public function __call($name, $arguments)
     {

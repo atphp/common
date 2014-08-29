@@ -4,6 +4,9 @@ namespace AndyTruong\Common\Traits;
 
 use Symfony\Component\Templating\EngineInterface;
 
+/**
+ * This trait is only available when we require this library with symfony/templating:~2.5.0
+ */
 trait TemplateEngineAwareTrait
 {
 

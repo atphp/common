@@ -12,7 +12,7 @@ class NullObject
     public $called = [];
 
     /** @var mixed[] */
-    public static $static_called = array();
+    public static $staticCalled = array();
 
     public function __call($name, $arguments)
     {
@@ -21,7 +21,7 @@ class NullObject
 
     public static function __callStatic($name, $arguments)
     {
-        static::$static_called[$name][] = $arguments;
+        static::$staticCalled[$name][] = $arguments;
     }
 
 }

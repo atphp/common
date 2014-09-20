@@ -28,6 +28,11 @@ class ArrayObjectWithDefaultValue extends ArrayObject
         return true;
     }
 
+    public function offsetUseDefault($key)
+    {
+        return !isset($this->data[$key]);
+    }
+
     public function offsetGet($key)
     {
         if (!parent::offsetExists($key)) {

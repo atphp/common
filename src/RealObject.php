@@ -18,8 +18,6 @@ use Iterator;
  *
  * The object based on this class will not allow any iterator if it's not really
  * implemented.
- *
- * @todo Missing test case.
  */
 abstract class RealObject implements Iterator
 {

@@ -28,8 +28,8 @@ class NullObjectTest extends PHPUnit_Framework_TestCase
     {
         $null = $this->getNullObject();
         $this->assertNull($null::callNullMethod(3, 4));
-        $this->assertCount(1, $null::$static_called['callNullMethod']);
-        $this->assertEquals(array(3, 4), $null::$static_called['callNullMethod'][0]);
+        $this->assertCount(1, $null::$staticCalled['callNullMethod']);
+        $this->assertEquals(array(3, 4), $null::$staticCalled['callNullMethod'][0]);
     }
 
 }

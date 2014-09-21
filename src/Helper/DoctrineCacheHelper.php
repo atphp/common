@@ -39,7 +39,7 @@ class DoctrineCacheHelper
             case 'memcached':
             case 'filesystem':
             case 'redis':
-                $method = at_camelize('get_%s_implementation');
+                $method = 'get' . at_camelize(sprintf('%s_implementation', $driver));
                 return $this->{$method}($cacheOptions);
             default:
                 throw new RuntimeException(sprintf("Unsupported cache type `%s` specified", $driver));

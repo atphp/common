@@ -1,6 +1,6 @@
 <?php
 
-namespace AndyTruong\Common\Helper;
+namespace AndyTruong\Common\Helper\Doctrine;
 
 use Doctrine\Common\Cache\ApcCache;
 use Doctrine\Common\Cache\ArrayCache;

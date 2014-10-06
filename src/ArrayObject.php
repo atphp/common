@@ -24,7 +24,9 @@ class ArrayObject extends RealObject implements Countable, ArrayAccess, Iterator
 
     public function toArray()
     {
-        return iterator_to_array($this, true);
+        return array_map(function($item) {
+            return $item instanceof ArrayObject ? $item->toArray() : $item;
+        }, iterator_to_array($this, true));
     }
 
     public function count()

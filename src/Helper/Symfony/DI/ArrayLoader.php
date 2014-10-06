@@ -34,8 +34,6 @@ class ArrayLoader
 
     public function load($content)
     {
-        $this->parseImports($content);
-
         if (!empty($content['parameters'])) {
             foreach ($content['parameters'] as $key => $value) {
                 $this->container->setParameter($key, $this->resolveServices($value));
@@ -43,24 +41,6 @@ class ArrayLoader
         }
 
         $this->parseDefinitions($content);
-    }
-
-    /**
-     * Parses all imports
-     *
-     * @param array  $content
-     * @param string $file
-     */
-    private function parseImports($content)
-    {
-        if (empty($content['imports'])) {
-            return;
-        }
-
-        foreach ($content['imports'] as $import) {
-            // $this->setCurrentDir(dirname($file));
-            // $this->import($import['resource'], null, isset($import['ignore_errors']) ? (bool) $import['ignore_errors'] : false, $file);
-        }
     }
 
     /**

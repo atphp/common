@@ -1,4 +1,4 @@
-Common [![Build Status](https://api.travis-ci.org/andytruong/common.svg?branch=v0.1)](https://travis-ci.org/andytruong/common) [![Latest Stable Version](https://poser.pugx.org/andytruong/common/v/stable.png)](https://packagist.org/packages/andytruong/common)
+Common [![Build Status](https://api.travis-ci.org/atphp/common.svg?branch=v0.1)](https://travis-ci.org/atphp/common) [![Latest Stable Version](https://poser.pugx.org/atphp/common/v/stable.png)](https://packagist.org/packages/atphp/common)
 ======
 
 Common tools for PHP 5.4+

@@ -1,9 +1,9 @@
 {
-    "name": "andytruong/common",
+    "name": "atphp/common",
     "type": "library",
     "description": "Common tools for PHP",
     "keywords": ["api", "render"],
-    "homepage": "https://github.com/andytruong/common",
+    "homepage": "https://github.com/atphp/common",
     "license": "MIT",
     "authors": [
         {
